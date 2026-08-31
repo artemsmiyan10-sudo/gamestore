@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотека | GameStore</title>
+    <link rel="stylesheet" href="{% static 'library.css' %}?v=7">
+    <link rel="icon" type="image/png" href="https://cdn.pixabay.com/photo/2012/04/15/18/57/dvd-34919_640.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-left">
+            <div class="logo">GAME<span>STORE</span></div>
+            <a href="{% url 'mfs:index' %}" class="nav-link">МАГАЗИН</a>
+            <a href="{% url 'mfs:library' %}" class="nav-link active">БИБЛИОТЕКА</a>
+            <a href="#" class="nav-link">НОВОСТИ</a>
+        </div>
+
+        <div class="nav-right">
+            <a href="{% url 'mfs:cart_detail' %}" class="nav-link">
+                КОРЗИНА
+                <!-- Элемент теперь существует всегда, но скрыт, если cart равен 0 -->
+                <span class="cart-badge" {% if not request.session.cart %}style="display: none;"{% endif %}>
+                    {{ request.session.cart|length }}
+                </span>
+            </a>
+            <button class="install-btn"><span class="arrow-down">➜</span> Установить</button>
+            {% if user.is_authenticated %}
+                <div class="user-dropdown">
+                    <a href="#" class="nav-link user-name" id="userMenuBtn">
+                        {{ user.username }} ▾
+                    </a>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <a href="{% url 'mfs:logout' %}" class="logout-item">Выйти</a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'mfs:login' %}" class="nav-link">ВХОД</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="steam-container">
+
+        <!-- Левая панель -->
+        <aside class="steam-sidebar">
+            <div class="sidebar-title">ВСЕ ({{ games|length }})</div>
+            <ul class="sidebar-list">
+                {% for game in games %}
+                <li class="sidebar-item {% if forloop.first %}active{% endif %}"
+                    data-game-id="{{ game.id }}"
+                    data-title="{{ game.title }}"
+                    data-cover="{% if game.cover_hd %}{{ game.cover_hd.url }}{% elif game.cover %}{{ game.cover.url }}{% endif %}"
+                    data-icon="{{ game.get_icon_url }}"
+                    data-remove-url="{% url 'mfs:remove_from_library' game.id %}">
+                        
+                    <!-- Иконка в левом списке (выводит картинку игры или стандартную) -->
+                    <img src="{{ game.get_icon_url }}" alt="" class="sidebar-game-icon">
+                        
+                    <span class="game-name">{{ game.title }}</span>
+                        
+                    <!-- Скрытый блок с форматированным описанием -->
+                    <template id="game-desc-{{ game.id }}">
+                        {% if game.short_description %}
+                            {{ game.short_description|linebreaks }}
+                        {% elif game.description %}
+                            {{ game.description|linebreaks }}
+                        {% else %}
+                            <p>Описание игры пока не добавлено.</p>
+                        {% endif %}
+                    </template>
+                </li>
+            {% empty %}
+                <li class="sidebar-empty">Библиотека пуста</li>
+            {% endfor %}
+            </ul>
+        </aside>
+
+        <!-- Правая панель -->
+        <main class="steam-main">
+            {% if games %}
+                <div id="gameDetailView" class="game-detail-wrapper">
+                    
+                    <div class="hero-header">
+                        <img id="detailCover" src="" alt="Обложка" class="hero-image">
+                        <div class="hero-overlay"></div>
+                        <div class="hero-title-container">
+                            <img id="detailIcon" src="" alt="" class="hero-icon">
+                            <h1 id="detailTitle" class="hero-title"></h1>
+                        </div>
+                    </div>
+
+                    <div class="action-bar">
+                        <button class="play-button">ИГРАТЬ</button>
+
+                        <!-- Меню настроек -->
+                        <div class="settings-dropdown">
+                            <button type="button" class="settings-btn" id="settingsBtn" title="Настройки">⚙️</button>
+                            <div class="dropdown-menu" id="dropdownMenu">
+                                <form id="deleteGameForm" action="" method="POST" onsubmit="return confirm('Удалить эту игру из вашей библиотеки?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item delete-item">Удалить из библиотеки</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-body">
+                        <section class="detail-section">
+                            <h2>Об этой игре</h2>
+                            <div id="detailDescContainer" class="description-box">
+                                <!-- Сюда подставится форматированное описание -->
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h2>В вашей библиотеке пока нет игр</h2>
+                    <a href="{% url 'mfs:index' %}" class="buy-button">
+                        Перейти в магазин
+                    </a>
+                </div>
+            {% endif %}
+        </main>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            const detailCover = document.getElementById('detailCover');
+            const detailTitle = document.getElementById('detailTitle');
+            const detailDescContainer = document.getElementById('detailDescContainer');
+            const detailIcon = document.getElementById('detailIcon');
+            const deleteGameForm = document.getElementById('deleteGameForm');
+            const settingsBtn = document.getElementById('settingsBtn');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const userMenuBtn = document.getElementById('userMenuBtn');
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+
+            function loadGameData(item) {
+                if (!item) return;
+
+                sidebarItems.forEach(el => el.classList.remove('active'));
+                item.classList.add('active');
+
+                const title = item.getAttribute('data-title');
+                const cover = item.getAttribute('data-cover');
+                const gameId = item.getAttribute('data-game-id');
+                const iconUrl = item.getAttribute('data-icon');
+
+                // Заголовок и фоновый баннер
+                detailTitle.textContent = title;
+                detailCover.src = cover;
+
+                // Иконка в шапке теперь выводится ВСЕГДА (своя или дефолтная)
+                detailIcon.src = iconUrl;
+                detailIcon.style.display = 'block';
+
+                // Загрузка описания
+                const template = document.getElementById(`game-desc-${gameId}`);
+                if (template) {
+                    detailDescContainer.innerHTML = template.innerHTML;
+                }
+            
+                // Ссылка на удаление
+                const removeUrl = item.getAttribute('data-remove-url');
+                if (deleteGameForm && removeUrl) {
+                    deleteGameForm.action = removeUrl;
+                }
+            }
+
+            if (userMenuBtn && userDropdownMenu) {
+                // Открытие/закрытие меню по клику на ник
+                userMenuBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    userDropdownMenu.classList.toggle('show');
+                });
+            
+                // Закрытие меню при клике в любую другую точку экрана
+                document.addEventListener('click', () => {
+                    userDropdownMenu.classList.remove('show');
+                });
+            }
+
+            settingsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+            });
+
+            // Закрытие меню при клике в любую точку экрана
+            document.addEventListener('click', () => {
+                dropdownMenu.classList.remove('show');
+            });
+
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', () => loadGameData(item));
+            });
+
+            if (sidebarItems.length > 0) {
+                loadGameData(sidebarItems[0]);
+            }
+        });
+    </script>
+</body>
+</html>

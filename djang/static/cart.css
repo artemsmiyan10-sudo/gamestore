@@ -1,0 +1,1050 @@
+@font-face {
+    font-family: "MyFont";
+    src: url("fonts/unbounded.ttf") format("opentype"); /* Если файлы лежит в папке css/, замените на url("../fonts/reg.otf") */
+    font-weight: 100 900;
+    font-style: normal;
+}
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #282a36 0%,
+            #17181f 35%,
+            #111216 70%
+        );
+
+    background-attachment: fixed;
+
+    color: #d6d7d8;
+
+    font-family:
+        Inter,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    width: 100%;
+    height: 74px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7%;
+
+    background: rgba(11, 18, 26, 0.96);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.06);
+
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+}
+
+
+.nav-left {
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+}
+
+
+.logo {
+    font-family: "MyFont", Inter, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: white;
+    margin-right: 25px;
+}
+
+
+.logo span {
+    color: #6366f1;
+}
+
+.nav-link {
+    font-family: "MyFont", Inter, sans-serif;
+    position: relative;
+    color: #b8bad1;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #6366f1;
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 2px;
+    background-color: #6366f1;
+    border-radius: 5px;
+}
+
+
+.nav-right {
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+}
+
+
+.profile {
+    color: #aeb8c2;
+    font-size: 14px;
+}
+
+
+.cart-link {
+    color: #b8bad1;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+
+.cart-link:hover,
+.cart-link.active {
+    color: #22c55e;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.cart-container {
+    width: min(1150px, 90%);
+
+    margin: 0 auto;
+
+    padding:
+        45px 0 100px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.cart-title {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 15px;
+
+    margin-bottom: 30px;
+}
+
+
+.cart-title h1 {
+    margin: 0;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+
+.cart-count {
+    color: #8e9aa5;
+    font-size: 24px;
+}
+
+
+/* =========================
+   LAYOUT
+========================= */
+
+.cart-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr) 330px;
+
+    gap: 25px;
+
+    align-items: start;
+}
+
+
+/* =========================
+   ITEMS
+========================= */
+
+.cart-items {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.cart-item {
+    position: relative; /* Обязательно: делает карточку точкой отсчета для ::after */
+    display: flex;
+    align-items: center;
+    min-height: 130px;
+    max-height: 130px;
+    padding: 10px;
+    background: #21232d;
+    
+    border: none; 
+    border-radius: 10px;
+    /* Объединили transition в одну строку */
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s; 
+}
+
+.cart-item:hover {
+    filter: brightness(1.10);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+.cart-item::after {
+    content: ''; /* Обязательно: генерирует псевдоэлемент в DOM */
+    position: absolute; /* Обязательно: привязывает inset: 0 к .cart-item */
+    inset: 0;
+    border-radius: 10px; /* Чтобы рамка повторяла скругление карточки */
+    border: 2px solid transparent;
+    transition: border-color 0.3s, filter 0.3s;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.cart-item:hover::after {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* =========================
+   COVER
+========================= */
+
+.cart-cover {
+    width: 200px;
+    height: 100px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #17181f;
+    border-radius: 5px;
+}
+
+
+.cart-cover img {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.no-cover {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #71808d;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   GAME INFO
+========================= */
+
+.cart-game-info {
+    flex: 1;
+    min-width: 0;
+    padding:
+        0 20px;
+}
+
+
+.cart-game-info h2 {
+    margin:
+        0 0 8px;
+    color: white;
+    font-size: 18px;
+}
+
+
+.cart-genres {
+    color: #9ba7b3;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.exclusive {
+    display: inline-block;
+    background-color: #261246;
+    color: #6366f1;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 7px 6px;
+    border-radius: 5px;
+    margin: 0px 0;
+}
+
+.exclusive {
+  font-family: "MyFont", Inter, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  color: #e2e8f0;
+  position: absolute;
+  right: 100px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(5px); background: rgba(0, 0, 0, 0.6); color: #fff;
+  margin:
+        0 0 12px;
+}
+
+.title-row {
+    display: flex;
+    align-items: center; /* Выравнивание по вертикальному центру */
+    gap: 10px;          /* Отступ между названием и тегом */
+}
+
+.title-row h3 {
+    margin: 0;
+    line-height: 1; /* Убирает лишний межстрочный отступ у заголовка */
+}
+
+.cart-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+
+.cart-actions a {
+    color: #8e9aa5;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+
+.cart-actions a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.remove-btn a:hover {
+    color: #a32a2a;
+    text-decoration: underline;
+}
+
+/* Правильный селектор для тега <a> с классом remove-btn */
+.remove-btn:hover {
+    color: #ef4444; /* Яркий читаемый красный вместо темного */
+    text-decoration: underline;
+}
+
+.cart-actions span {
+    color: #4e5560;
+    font-size: 14px;
+}
+
+
+/* =========================
+   PRICE
+========================= */
+
+.cart-price {
+    width: 120px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 10px;
+
+    padding-right: 10px;
+}
+
+
+.discount {
+    font-family: "MyFont", Inter, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #22c55e;
+    color: #172000;
+    padding: 7px 6px;
+    font-size: 16px;
+    border-radius: 5px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.5px;
+}
+
+
+.old-price {
+    color: #71808d;
+    font-size: 12.5px;
+    text-decoration: line-through;
+}
+
+
+.current-price {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+.discount-row {
+    color: #22c55e !important;
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.cart-summary {
+    padding: 25px;
+    background: #21232d;
+    border:
+        2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 100px;
+    min-height: 300px;
+}
+
+
+.cart-summary h2 {
+    margin:
+        0 0 22px;
+    color: #8e9aa5;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #aeb8c2;
+    font-size: 14px;
+}
+
+.summary-row2 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    color: #aeb8c2;
+    font-size: 14px;
+}
+
+
+.discount-row {
+    color: #22c55e;
+}
+
+
+.summary-line {
+    height: 1px;
+    margin:
+        20px 0;
+    background:
+        rgba(255, 255, 255, 0.1);
+}
+
+
+.total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-size: 18px;
+}
+
+
+.total-row strong {
+    font-size: 24px;
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+.checkout-button {
+    text-decoration: none;
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px 27px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6366f1;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.checkout-button:hover {
+    transform: scale(1.1)
+}
+
+.checkout-button:active {
+    transform: scale(0.9)
+}
+
+
+.payment-note {
+    margin:
+        15px 0 0;
+
+    color: #71808d;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+
+/* =========================
+   EMPTY CART
+========================= */
+
+.empty-cart {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #21232d;
+    border:
+        2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.7;
+}
+
+
+.empty-cart h2 {
+    margin: 0 0 10px;
+
+    color: white;
+
+    font-size: 24px;
+}
+
+
+.empty-cart p {
+    margin: 0 0 25px;
+
+    color: #8e9aa5;
+
+    font-size: 14px;
+}
+
+.empty-cart a {
+    text-decoration: none;
+}
+
+
+.buy-button {
+    border: none;
+    background: #6366f1;
+    color: white;
+    padding: 11px 27px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease; 
+}
+
+.buy-button:hover {
+    transform: scale(1.1);
+}
+
+.buy-button:active {
+    transform: scale(0.9);
+}
+
+
+/* =========================
+   ADAPTIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 0 4%;
+    }
+
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-summary {
+        position: static;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .navbar {
+        height: auto;
+
+        padding: 20px 5%;
+
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .nav-left {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 15px;
+    }
+
+    .nav-right {
+        display: none;
+    }
+
+    .cart-container {
+        width: 92%;
+
+        padding-top: 30px;
+    }
+
+    .cart-title h1 {
+        font-size: 28px;
+    }
+
+    .cart-item {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .cart-cover {
+        width: 150px;
+        height: 75px;
+    }
+
+    .cart-game-info {
+        width: calc(100% - 150px);
+
+        padding: 0 0 0 12px;
+    }
+
+    .cart-price {
+        width: 100%;
+
+        margin-top: 15px;
+
+        padding-right: 0;
+
+        align-items: flex-start;
+
+        flex-direction: row;
+
+        justify-content: flex-end;
+    }
+
+}
+
+.install-btn {
+    border: none;
+    background: #6366f1;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.install-btn:hover {
+    transform: scale(1.1);
+}
+
+.install-btn:active {
+    transform: scale(0.9);
+}
+
+.cart-badge {
+    background: #6366f1;
+    color: white;
+    font-size: 14px;
+    padding: 2px 10px;
+    border-radius: 15px;
+    margin-left: 5px;
+}
+
+/* =========================
+   USER DROPDOWN
+========================= */
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    right: auto;
+    background-color: #171a21;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    z-index: 1000;
+    min-width: 130px;
+    padding: 0px 0;
+    text-align: center;
+    white-space: nowrap;
+
+    /* Скрытое состояние по умолчанию */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+/* Показываем меню при наличии класса .show (от клика) */
+.user-dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(4px);
+}
+
+.user-dropdown-menu .logout-item {
+    display: block;
+    padding: 12px 16px;
+    color: #c6d4df !important;
+    text-decoration: none !important;
+    font-size: 14px;
+    font-weight: normal;
+    border-radius: 5px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.user-dropdown-menu .logout-item:hover {
+    background-color: #a32a2a;
+    color: #ffffff !important;
+}
+
+.arrow-down {
+    display: inline-block;
+    transform: rotate(90deg);
+}
+
+.navbar {
+    width: 100%;
+    height: 74px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    background: rgba(11, 18, 26, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.logo {
+    font-family: "MyFont", Inter, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: white;
+}
+
+.logo span {
+    color: #6366f1;
+}
+
+.nav-link {
+    position: relative;
+    color: #b8bad1;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #6366f1;
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 2px;
+    background-color: #6366f1;
+    border-radius: 5px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.profile {
+    color: #aeb8c2;
+    font-size: 16px;
+}
+
+.recommendations-section {
+    margin-top: 50px;
+    width: 100%;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+/* Контейнер всей секции рекомендаций */
+.recommendations-section {
+    margin-top: 30px;
+    width: 100%;
+    clear: both;
+}
+
+.recommendations-section .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Сетка: ровно 4 колонки одинаковой ширины */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Задаёт ровно 3 колонки */
+    gap: 20px;
+}
+
+/* Карточка игры */
+.rec-card {
+    background: #252833;
+    border: none; 
+    border-radius: 10px;
+    max-height: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.rec-card:hover {
+    transform: translateY(-8px);
+    filter: brightness(1.10);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+.rec-card::after {
+    content: '';
+    position: absolute;
+    inset: 0; /* Растягивает на всю карточку */
+    border-radius: 10px;
+    border: 2px solid transparent; /* Рамка есть всегда, но прозрачная */
+    transition: border-color 0.3s, filter 0.3s;
+    pointer-events: none; /* Клики проходят сквозь рамку на ссылку */
+    z-index: 2; /* Ставим СВЕРХУ картинки */
+}
+
+.rec-card:hover::after {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Ограничиваем высоту изображения, чтобы картинки не растягивались */
+.rec-card-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+a.game-card {
+    position: relative; /* Обязательно для позиционирования ::after */
+    min-width: 250px;
+    min-height: 300px;
+    overflow: hidden;
+    background: #21232d;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    border: none; 
+    cursor: pointer;
+    text-decoration: none;
+    color: #ffffff !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Создаем наложение для рамки */
+a.game-card::after {
+    content: '';
+    position: absolute;
+    inset: 0; /* Растягивает на всю карточку */
+    border-radius: 10px;
+    border: 2px solid transparent; /* Рамка есть всегда, но прозрачная */
+    transition: border-color 0.2s;
+    pointer-events: none; /* Клики проходят сквозь рамку на ссылку */
+    z-index: 2; /* Ставим СВЕРХУ картинки */
+}
+
+a.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Контент внутри карточки */
+.rec-card-content {
+    padding: 8px 15px 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+.rec-card-title {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rec-card-genre {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+/* Футер карточки с ценой и кнопкой */
+.rec-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.rec-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.btn-add-rec {
+    background: #6366f1;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-add-rec {
+    border: none;
+    background: #6366f1;
+    color: white;
+    padding: 7px 14px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn-add-rec:hover {
+    transform: scale(1.1);
+}
+
+.btn-add-rec:active {
+    transform: scale(0.9);
+}

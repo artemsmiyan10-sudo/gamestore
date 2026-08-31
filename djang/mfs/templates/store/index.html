@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин | GameStore</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=6">
+    <link rel="icon" type="image/png" href="https://cdn.pixabay.com/photo/2012/04/15/18/57/dvd-34919_640.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Верхняя панель -->
+    <header class="navbar">
+        <div class="nav-left">
+            <div class="logo">GAME<span>STORE</span></div>
+            <a href="?" class="nav-link active">МАГАЗИН</a>
+            <a href="{% url 'mfs:library' %}" class="nav-link">БИБЛИОТЕКА</a>
+            <a href="#" class="nav-link">НОВОСТИ</a>
+        </div>
+
+        <div class="nav-right">
+            <a href="{% url 'mfs:cart_detail' %}" class="nav-link">
+                КОРЗИНА
+                <!-- Элемент теперь существует всегда, но скрыт, если cart равен 0 -->
+                <span class="cart-badge" {% if not request.session.cart %}style="display: none;"{% endif %}>
+                    {{ request.session.cart|length }}
+                </span>
+            </a>
+            <button class="install-btn"><span class="arrow-down">➜</span> Установить</button>
+            {% if user.is_authenticated %}
+                <div class="user-dropdown">
+                    <a href="#" class="nav-link user-name" id="userMenuBtn">
+                        {{ user.username }} ▾
+                    </a>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <a href="{% url 'mfs:logout' %}" class="logout-item">Выйти</a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'mfs:login' %}" class="nav-link">ВХОД</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Основной контейнер -->
+    <main class="container">
+
+        <!-- Поиск -->
+        <div class="search-area">
+            <h1>Магазин игр</h1>
+            <div class="search-box-container">
+                <div class="search-box">
+                    <input type="text" id="game-search-input" placeholder="Поиск по магазину..." autocomplete="off">
+
+                    <!-- Кнопка очистки (изначально скрыта) -->
+                    <span id="clear-search" class="clear-search-btn" style="display: none;">&times;</span>
+
+                    <button>
+                        <img src="https://emojigraph.org" width="25" height="25">
+                    </button>
+                </div>
+                <div id="search-results-dropdown" class="search-results" style="display: none;"></div>
+            </div>
+
+        </div>
+
+        <!-- Игра недели -->
+        {% if featured_game %}
+        <section class="featured">
+            {% if featured_game.cover %}
+                <img src="{{ featured_game.cover.url }}" alt="{{ featured_game.title }}">
+            {% else %}
+                <div class="no-cover">Нет обложки</div>
+            {% endif %}
+
+            <div class="featured-info">
+                <span class="featured-label">ИГРА НЕДЕЛИ</span>
+                <h2>{{ featured_game.title }}</h2>
+                <p>{{ featured_game.description }}</p>
+
+                {% if featured_game.release_date %}
+                    <span class="release-date">
+                        Дата выхода: {{ featured_game.release_date|date:"d.m.Y" }}
+                    </span>
+                {% endif %}
+
+                <div class="featured-bottom">
+                    <div class="price-group">
+                        {% if featured_game.discount > 0 %}
+                            <span class="discount">-{{ featured_game.discount }}%</span>
+                            <span class="old-featured-price">{{ featured_game.price|floatformat:0 }}₴</span>
+                            <span class="featured-price">{{ featured_game.discounted_price|floatformat:0 }}₴</span>
+                        {% else %}
+                            <span class="featured-price">{{ featured_game.price|floatformat:0 }}₴</span>
+                        {% endif %}
+                    </div>
+                    <button data-url="{% url 'mfs:add_to_cart' featured_game.id %}" class="buy-button js-add-to-cart">
+                        В корзину
+                    </button>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Меню жанров -->
+
+        <!-- Секции подборок -->
+        {% for collection in collections %}
+        <section class="games-section" style="margin-bottom: 40px;">
+            <div class="section-header">
+                <h2>{{ collection.title }}</h2>
+                <a href="#">Смотреть все ➜</a>
+            </div>
+
+            <div class="games-grid">
+                {% for game in collection.game_products.all %}
+                <!-- Карточка игры -->
+                <a href="{% url 'mfs:game_detail' game.id %}" class="game-card">
+                    <div class="game-image">
+                        {% if game.cover %}
+                            <img src="{{ game.cover.url }}" alt="{{ game.title }}">
+                        {% else %}
+                            <div class="no-cover">Нет обложки</div>
+                        {% endif %}
+                    
+                        {% if game.discount > 0 %}
+                            <span class="discount">-{{ game.discount }}%</span>
+                        {% endif %}
+                    </div>
+                
+                    <div class="game-info">
+                        <h3>{{ game.title }}</h3>
+                    
+                        <p class="game-genres">
+                            {% for genre in game.genres.all %}
+                                {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                Без жанра
+                            {% endfor %}
+                        </p>
+                        
+                        {% if game.release_date %}
+                            <span class="release-date">
+                                Дата выхода: {{ game.release_date|date:"d.m.Y" }}
+                            </span>
+                        {% endif %}
+                        
+                        <div class="game-bottom">
+                            {% if game.discount > 0 %}
+                                <span class="discount">-{{ game.discount }}%</span>
+                                <div class="price-block">
+                                    <span class="old-price">{{ game.price|floatformat:0 }}₴</span>
+                                    <span class="price {% if game.discount > 101 %}hot-discount{% endif %}">
+                                        {{ game.discounted_price|floatformat:0 }}₴
+                                    </span>
+                                </div>
+                            {% else %}
+                                <span class="price">{{ game.price|floatformat:0 }}₴</span>
+                            {% endif %}
+                            {% if game.is_not_on_steam %}
+                                <div>
+                                    <span class="not-on-steam-badge2">Эксклюзив</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% empty %}
+            <p>Игр не найдено.</p>
+        {% endfor %} <!-- Закрываем цикл по коллекциям -->
+    </main>
+
+<script>
+    // Запоминаем текущую высоту скролла при клике на жанр
+    document.querySelectorAll('.categories-filter a').forEach(link => {
+        link.addEventListener('click', () => {
+            sessionStorage.setItem('scrollPosition', window.scrollY);
+        });
+    });
+
+    // Восстанавливаем высоту скролла сразу при загрузке
+    document.addEventListener("DOMContentLoaded", () => {
+        const savedPosition = sessionStorage.getItem('scrollPosition');
+        if (savedPosition !== null) {
+            window.scrollTo({ top: parseInt(savedPosition, 10), behavior: 'instant' });
+            sessionStorage.removeItem('scrollPosition');
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const installBtn = document.querySelector('.install-btn');
+        const toast = document.getElementById('installToast');
+        let toastTimeout;
+
+        if (installBtn && toast) {
+            installBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Сбрасываем таймер, если нажмут несколько раз подряд
+                clearTimeout(toastTimeout);
+
+                // Показываем плашку
+                toast.classList.add('show');
+
+                // Прячем через 3 секунды
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            });
+        }
+    });
+</script>
+
+<script>
+document.querySelectorAll('.js-add-to-cart').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const url = this.getAttribute('data-url');
+        
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Визуальный отклик кнопки игры недели
+                this.textContent = 'Добавлено!';
+                this.style.backgroundColor = '#10b981';
+                this.disabled = true;
+                
+                // Работа со счетчиком в шапке
+                const badge = document.querySelector('.cart-badge');
+                if (badge && data.cart_count) {
+                    badge.textContent = data.cart_count;
+                    badge.style.display = 'inline-block'; // Показываем счетчик, если он был скрыт
+                }
+            }
+        })
+        .catch(error => console.error('Ошибка:', error));
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById('game-search-input');
+    const resultsDropdown = document.getElementById('search-results-dropdown');
+    const clearBtn = document.getElementById('clear-search');
+    const userMenuBtn = document.getElementById('userMenuBtn');
+    const userDropdownMenu = document.getElementById('userDropdownMenu');
+
+    // Функция для переключения видимости крестика
+    function toggleClearButton() {
+        if (searchInput.value.trim().length > 0) {
+            clearBtn.style.display = 'block';
+        } else {
+            clearBtn.style.display = 'none';
+        }
+    }
+
+    if (userMenuBtn && userDropdownMenu) {
+        // Открытие/закрытие меню по клику на ник
+        userMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            userDropdownMenu.classList.toggle('show');
+        });
+
+        // Закрытие меню при клике в любую другую точку экрана
+        document.addEventListener('click', () => {
+            userDropdownMenu.classList.remove('show');
+        });
+    }
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        toggleClearButton(); // Проверяем, нужно ли показать крестик
+
+        if (query.length < 2) {
+            resultsDropdown.style.display = 'none';
+            resultsDropdown.innerHTML = '';
+            return;
+        }
+
+        fetch(`/api/search/?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                resultsDropdown.innerHTML = '';
+
+                if (data.games.length > 0) {
+                    data.games.forEach(game => {
+                        const gameUrl = `/game/${game.id}/`; 
+
+                        const item = document.createElement('a');
+                        item.href = gameUrl;
+                        item.className = 'search-result-item';
+                        item.innerHTML = `
+                            <img src="${game.cover_url}" alt="${game.title}">
+                            <div class="search-result-info">
+                                <h4>${game.title}</h4>
+                                <span class="search-price">${game.price}</span>
+                            </div>
+                        `;
+                        resultsDropdown.appendChild(item);
+                    });
+                    resultsDropdown.style.display = 'block';
+                } else {
+                    resultsDropdown.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Ошибка поиска:', error));
+    });
+
+    // Логика клика по крестику
+    // Найдите этот блок (примерно 215 строка):
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        resultsDropdown.innerHTML = '';
+
+        // ОШИБКА БЫЛА ЗДЕСЬ: resultsDropdown.style.style.display = 'none';
+        resultsDropdown.style.display = 'none'; // Исправлено (один .style)
+
+        clearBtn.style.display = 'none';
+        searchInput.focus();
+    });
+
+    // Скрываем плашку при клике вне области поиска
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsDropdown.contains(e.target) && !clearBtn.contains(e.target)) {
+            resultsDropdown.style.display = 'none';
+        }
+    });
+});
+</script>
+
+
+
+
+<!-- Плашка уведомления -->
+<div id="installToast" class="toast-notification">
+    Приложение пока недоступно для установки
+</div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация | GameStore</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/png" href="https://cdn.pixabay.com/photo/2012/04/15/18/57/dvd-34919_640.png">
+    <link rel="stylesheet" href="{% static 'library.css' %}?v=2">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Авторизация</h2>
+            
+            {% if messages %}
+                <div class="auth-errors">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">Имя пользователя</label>
+                    <input type="text" name="username" id="id_username" required placeholder="Введите логин">
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password">Пароль</label>
+                    <input type="password" name="password" id="id_password" required placeholder="Введите пароль">
+                </div>
+
+                <button type="submit" class="buy-button auth-submit">Войти</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
