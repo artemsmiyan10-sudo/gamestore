@@ -53,7 +53,7 @@ body {
     border-bottom:
         1px solid rgba(255, 255, 255, 0.06);
 
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
 
     position: sticky;
     top: 0;
@@ -81,7 +81,7 @@ body {
 
 
 .logo span {
-    color: #6366f1;
+    color:  var(--accent);
 }
 
 .nav-link {
@@ -96,7 +96,7 @@ body {
 
 .nav-link:hover,
 .nav-link.active {
-    color: #6366f1;
+    color:  var(--accent);
 }
 
 .nav-link.active::after {
@@ -106,7 +106,7 @@ body {
     right: 0;
     bottom: -8px;
     height: 2px;
-    background-color: #6366f1;
+    background-color:  var(--accent);
     border-radius: 5px;
 }
 
@@ -139,7 +139,7 @@ body {
 
 .cart-link:hover,
 .cart-link.active {
-    color: #22c55e;
+    color: var(--success);
 }
 
 
@@ -231,7 +231,7 @@ body {
 
 .cart-item:hover {
     filter: brightness(1.10);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
 }
 
 .cart-item::after {
@@ -317,7 +317,7 @@ body {
 .exclusive {
     display: inline-block;
     background-color: #261246;
-    color: #6366f1;
+    color:  var(--accent);
     font-size: 14px;
     font-weight: 600;
     padding: 7px 6px;
@@ -373,13 +373,13 @@ body {
 }
 
 .remove-btn a:hover {
-    color: #a32a2a;
+    color: var(--danger);;
     text-decoration: underline;
 }
 
 /* Правильный селектор для тега <a> с классом remove-btn */
 .remove-btn:hover {
-    color: #ef4444; /* Яркий читаемый красный вместо темного */
+    color: var(--danger);; /* Яркий читаемый красный вместо темного */
     text-decoration: underline;
 }
 
@@ -407,17 +407,16 @@ body {
     padding-right: 10px;
 }
 
-
 .discount {
     font-family: "MyFont", Inter, sans-serif;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #22c55e;
+    background: var(--success);
     color: #172000;
     padding: 7px 6px;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.5px;
@@ -439,7 +438,7 @@ body {
 
 
 .discount-row {
-    color: #22c55e !important;
+    color: var(--success) ;
 }
 
 
@@ -452,8 +451,8 @@ body {
     background: #21232d;
     border:
         2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-md);
+    box-shadow: 0 15px 25px var(--shadow);
     position: sticky;
     top: 100px;
     min-height: 300px;
@@ -488,7 +487,7 @@ body {
 
 
 .discount-row {
-    color: #22c55e;
+    color: var(--success) ;
 }
 
 
@@ -525,8 +524,8 @@ body {
     margin-top: 25px;
     padding: 15px 27px;
     border: none;
-    border-radius: 5px;
-    background-color: #6366f1;
+    border-radius: var(--radius-sm);
+    background-color:  var(--accent);
     color: white;
     font-size: 16px;
     font-weight: 700;
@@ -568,8 +567,8 @@ body {
     background: #21232d;
     border:
         2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    box-shadow: 0 15px 25px var(--shadow);
+    border-radius: var(--radius-md);
 }
 
 
@@ -604,10 +603,10 @@ body {
 
 .buy-button {
     border: none;
-    background: #6366f1;
+    background:  var(--accent);
     color: white;
     padding: 11px 27px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
@@ -713,10 +712,10 @@ body {
 
 .install-btn {
     border: none;
-    background: #6366f1;
+    background:  var(--accent);
     color: white;
     padding: 9px 14px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 16px;
     cursor: pointer;
@@ -732,11 +731,11 @@ body {
 }
 
 .cart-badge {
-    background: #6366f1;
+    background:  var(--accent);
     color: white;
     font-size: 14px;
     padding: 2px 10px;
-    border-radius: 15px;
+    border-radius: var(--radius-big);
     margin-left: 5px;
 }
 
@@ -756,8 +755,8 @@ body {
     right: auto;
     background-color: #171a21;
     border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
-    border-radius: 5px;
+    box-shadow: 0px 8px 16px var(--shadow2);
+    border-radius: var(--radius-sm);
     z-index: 1000;
     min-width: 130px;
     padding: 0px 0;
@@ -783,16 +782,16 @@ body {
 .user-dropdown-menu .logout-item {
     display: block;
     padding: 12px 16px;
-    color: #c6d4df !important;
+    color: #c6d4df ;
     text-decoration: none !important;
     font-size: 14px;
     font-weight: normal;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     transition: background 0.2s, color 0.2s;
 }
 
 .user-dropdown-menu .logout-item:hover {
-    background-color: #a32a2a;
+    background-color: var(--danger);;
     color: #ffffff !important;
 }
 
@@ -810,7 +809,7 @@ body {
     padding: 0 7%;
     background: rgba(11, 18, 26, 0.96);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
     backdrop-filter: blur(5px);
     position: sticky;
     top: 0;
@@ -832,7 +831,7 @@ body {
 }
 
 .logo span {
-    color: #6366f1;
+    color: var(--accent);
 }
 
 .nav-link {
@@ -846,7 +845,7 @@ body {
 
 .nav-link:hover,
 .nav-link.active {
-    color: #6366f1;
+    color: var(--accent);
 }
 
 .nav-link.active::after {
@@ -856,8 +855,8 @@ body {
     right: 0;
     bottom: -8px;
     height: 2px;
-    background-color: #6366f1;
-    border-radius: 5px;
+    background-color: var(--accent);
+    border-radius: var(--radius-sm);
 }
 
 .nav-right {
@@ -908,7 +907,7 @@ body {
 .rec-card {
     background: #252833;
     border: none; 
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     max-height: 300px;
     overflow: hidden;
     display: flex;
@@ -919,14 +918,14 @@ body {
 .rec-card:hover {
     transform: translateY(-8px);
     filter: brightness(1.10);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
 }
 
 .rec-card::after {
     content: '';
     position: absolute;
     inset: 0; /* Растягивает на всю карточку */
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     border: 2px solid transparent; /* Рамка есть всегда, но прозрачная */
     transition: border-color 0.3s, filter 0.3s;
     pointer-events: none; /* Клики проходят сквозь рамку на ссылку */
@@ -951,12 +950,12 @@ a.game-card {
     min-height: 300px;
     overflow: hidden;
     background: #21232d;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
     border: none; 
     cursor: pointer;
     text-decoration: none;
-    color: #ffffff !important;
+    color: #ffffff ;
     display: flex;
     flex-direction: column;
 }
@@ -966,7 +965,7 @@ a.game-card::after {
     content: '';
     position: absolute;
     inset: 0; /* Растягивает на всю карточку */
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     border: 2px solid transparent; /* Рамка есть всегда, но прозрачная */
     transition: border-color 0.2s;
     pointer-events: none; /* Клики проходят сквозь рамку на ссылку */
@@ -975,7 +974,7 @@ a.game-card::after {
 
 a.game-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
 }
 
 /* Контент внутри карточки */
@@ -1019,10 +1018,10 @@ a.game-card:hover {
 }
 
 .btn-add-rec {
-    background: #6366f1;
+    background: var(--accent);
     color: #fff;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
@@ -1031,10 +1030,10 @@ a.game-card:hover {
 
 .btn-add-rec {
     border: none;
-    background: #6366f1;
+    background: var(--accent);
     color: white;
     padding: 7px 14px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
@@ -1047,4 +1046,51 @@ a.game-card:hover {
 
 .btn-add-rec:active {
     transform: scale(0.9);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #111216;
+}
+::-webkit-scrollbar-thumb {
+    background: #2e313f;
+    border-radius: var(--radius-sm);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+:root {
+    /* Colors */
+    --bg-primary: #111216;
+    --bg-secondary: #17181f;
+    --bg-card: #252833;
+    --bg-card-hover: #2c2e3b;
+
+    --text-primary: #ffffff;
+    --text-secondary: #becddb;
+    --text-muted: #7f8b96;
+
+    --accent: #6366f1;
+    --success: #22c55e;
+    --danger: #e9382f;
+
+    /* Borders */
+    --border: rgba(255, 255, 255, 0.2);
+    --border-accent: #3e3e70;
+    --border-subtle: rgba(255, 255, 255, 0.1);
+
+    /* Shadows */
+    --shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    --shadow2: 0 15px 25px rgba(0, 0, 0, 0.5);
+
+    /* Radius */
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --radius-big: 50px;
+
+    /* Animation */
+    --transition: 0.2s ease;
 }

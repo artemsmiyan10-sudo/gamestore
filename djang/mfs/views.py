@@ -38,6 +38,45 @@ def home(request):
         'selected_genre_slug': selected_genre_slug,
     })
 
+import os
+from django.conf import settings
+from mfs.models import Game, Dlc, Screenshot
+
+# Собираем пути ко всем файлам, которые реально используются в базе
+used_files = set()
+
+def add_file(field):
+    if field and hasattr(field, 'path') and os.path.exists(field.path):
+        used_files.add(os.path.normpath(field.path))
+
+for g in Game.objects.all():
+    for attr in ['trailer_file', 'icon', 'cover_hd']:
+        if hasattr(g, attr): add_file(getattr(g, attr))
+
+for d in Dlc.objects.all():
+    for attr in ['trailer_file', 'icon', 'cover_hd']:
+        if hasattr(d, attr): add_file(getattr(d, attr))
+
+for sc in Screenshot.objects.all():
+    if hasattr(sc, 'image'): add_file(sc.image)
+
+# Проходим по папке media и удаляем файлы, которых нет в базе
+media_dir = settings.MEDIA_ROOT
+deleted_count = 0
+
+for root, dirs, files in os.walk(media_dir):
+    for file in files:
+        file_path = os.path.normpath(os.path.join(root, file))
+        if file_path not in used_files:
+            try:
+                os.remove(file_path)
+                deleted_count += 1
+                print(f"Удален устаревший файл: {file}")
+            except Exception as e:
+                print(f"Ошибка удаления {file}: {e}")
+
+print(f"Готово! Очищено файлов: {deleted_count}")
+
 
 def game_detail(request, game_id):
     game = get_object_or_404(Game, id=game_id)
@@ -70,6 +109,18 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('mfs:index')
+
+from .models import News
+def news(request):
+    news_list = News.objects.all()
+
+    return render(
+        request,
+        "store/news.html",
+        {
+            "news_list": news_list
+        }
+    )
 
 def remove_from_cart(request, game_id):
     cart = request.session.get('cart', [])
@@ -124,28 +175,52 @@ def cart_detail(request):
         'recommended_games': recommended_games,  # Передаем рекомендации в шаблон
     })
 
+# Пример функции поиска в views.py
+from django.http import JsonResponse
+from .models import Game
+
 def game_search_ajax(request):
     query = request.GET.get('q', '').strip()
-    results = []
     
-    if len(query) >= 2: # Начинаем искать, если введено 2 и более символа
-        # Ищем игры, содержащие запрос в названии (без учета регистра)
-        games = Game.objects.filter(title__icontains=query)[:3]
-        
-        for game in games:
-            # Безопасно получаем URL обложки
-            cover_url = game.cover.url if game.cover else 'https://placeholder.com'
-            
-            # Высчитываем актуальную цену с учетом скидки (если метод прописан в модели)
-            price = game.discounted_price if hasattr(game, 'discounted_price') else game.price
+    if len(query) < 2:
+        return JsonResponse({'games': []})
 
-            results.append({
-                'id': game.id,
-                'title': game.title,
-                'cover_url': cover_url,
-                'price': f"{int(price)}₴",
-            })
-            
+    games = Game.objects.filter(title__icontains=query)[:5]
+    results = []
+
+    for game in games:
+        # Жанры
+        genres_str = ", ".join([g.name for g in game.genres.all()]) if hasattr(game, 'genres') else ""
+        
+        # Скидка и расчет цен
+        discount = getattr(game, 'discount', 0)
+        
+        if discount > 0:
+            if hasattr(game, 'old_price') and game.old_price:
+                old_p = int(game.old_price)
+                curr_p = int(game.price)
+            else:
+                old_p = int(game.price)
+                # Приводим game.price к float для выполнения арифметической операции
+                curr_p = int(float(game.price) * (1 - discount / 100))
+        else:
+            old_p = None
+            curr_p = int(game.price)
+
+        # Проверка эксклюзивности
+        is_exclusive = getattr(game, 'is_exclusive', False)
+
+        results.append({
+            'id': game.id,
+            'title': game.title,
+            'price': curr_p,          # Рассчитанная цена со скидкой
+            'old_price': old_p,       # Старая цена
+            'discount': discount,     # Процент скидки
+            'cover_url': game.cover.url if game.cover else '',
+            'genres': genres_str,
+            'is_exclusive': getattr(game, 'is_not_on_steam', False),
+        })
+
     return JsonResponse({'games': results})
 
 @login_required
@@ -185,3 +260,6 @@ def remove_from_library(request, game_id):
     # Удаляем игру из ManyToMany связи пользователя (настройте под вашу модель)
     request.user.purchased_games.remove(game)
     return redirect('mfs:library')
+
+# Замените сложную фильтрацию на простой запрос всех игр для проверки:
+games = Game.objects.all()

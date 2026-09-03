@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Genre, Collection, Game, Dlc
 from .models import Game, Screenshot
+from .models import News
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
@@ -26,3 +27,14 @@ class GameAdmin(admin.ModelAdmin):
 @admin.register(Dlc)
 class DlcAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'discount')
+
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "created_at",
+    )
+
+    search_fields = (
+        "title",
+    )

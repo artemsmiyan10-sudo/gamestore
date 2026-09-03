@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Магазин | GameStore</title>
 
-    <link rel="stylesheet" href="{% static 'style.css' %}?v=6">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=14">
     <link rel="icon" type="image/png" href="https://cdn.pixabay.com/photo/2012/04/15/18/57/dvd-34919_640.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -19,7 +19,7 @@
             <div class="logo">GAME<span>STORE</span></div>
             <a href="?" class="nav-link active">МАГАЗИН</a>
             <a href="{% url 'mfs:library' %}" class="nav-link">БИБЛИОТЕКА</a>
-            <a href="#" class="nav-link">НОВОСТИ</a>
+            <a href="{% url 'mfs:news' %}" class="nav-link">НОВОСТИ</a>
         </div>
 
         <div class="nav-right">
@@ -51,22 +51,56 @@
 
         <!-- Поиск -->
         <div class="search-area">
-            <h1>Магазин игр</h1>
-            <div class="search-box-container">
-                <div class="search-box">
-                    <input type="text" id="game-search-input" placeholder="Поиск по магазину..." autocomplete="off">
+    <h1>Магазин игр</h1>
+        <div class="search-box-container">
 
-                    <!-- Кнопка очистки (изначально скрыта) -->
-                    <span id="clear-search" class="clear-search-btn" style="display: none;">&times;</span>
+            <!-- 1. Сама поисковая строка (только инпут и кнопки) -->
+            <div class="search-box">
+                <input type="text" id="game-search-input" placeholder="Поиск по магазину..." autocomplete="off">
 
-                    <button>
-                        <img src="https://emojigraph.org" width="25" height="25">
-                    </button>
-                </div>
-                <div id="search-results-dropdown" class="search-results" style="display: none;"></div>
+                <!-- Кнопка очистки -->
+                <span id="clear-search" class="clear-search-btn" style="display: none;">&times;</span>
+
+                <button>
+                    <img src="https://images.icon-icons.com/1674/PNG/512/search_111173.png" width="25" height="25">
+                </button>
+            </div>
+
+            <!-- 2. Выпадающий блок (результаты вставляются СЮДА) -->
+            <div id="search-results-dropdown" class="search-results" style="display: none;">
+
+                <a href="/game/{{ game.id }}/" class="search-result-item">
+                    <!-- Левая часть: обложка и инфо -->
+                    <img src="{{ game.cover.url }}" alt="{{ game.title }}" class="search-cover">
+
+                    <div class="search-result-info">
+                        <h4 class="search-title">{{ game.title }}</h4>
+                    </div>
+
+                    <!-- Правая часть: бейджи и цена -->
+                    <div class="search-result-right">
+                        <div class="search-badges">
+                            {% if game.is_not_on_steam %}
+                                <span class="not-on-steam-badge2">ЭКСКЛЮЗИВ</span>
+                            {% endif %}
+                            {% if game.discount %}
+                                <span class="discount">-{{ game.discount }}%</span>
+                            {% endif %}
+                        </div>
+                    
+                        <div class="search-price-block">
+                            {% if game.discount %}
+                                <span class="old-price">{{ game.old_price }}₴</span>
+                            {% endif %}
+                            <span class=".search-price">{{ game.price }}₴</span>
+                        </div>
+                    </div>
+                </a>
+
             </div>
 
         </div>
+    </div>
 
         <!-- Игра недели -->
         {% if featured_game %}
@@ -262,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const userMenuBtn = document.getElementById('userMenuBtn');
     const userDropdownMenu = document.getElementById('userDropdownMenu');
 
-    // Функция для переключения видимости крестика
+    // Переключение видимости крестика
     function toggleClearButton() {
         if (searchInput.value.trim().length > 0) {
             clearBtn.style.display = 'block';
@@ -272,22 +306,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (userMenuBtn && userDropdownMenu) {
-        // Открытие/закрытие меню по клику на ник
         userMenuBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             userDropdownMenu.classList.toggle('show');
         });
 
-        // Закрытие меню при клике в любую другую точку экрана
         document.addEventListener('click', () => {
             userDropdownMenu.classList.remove('show');
         });
     }
 
+    // Живой поиск
     searchInput.addEventListener('input', function() {
         const query = this.value.trim();
-        toggleClearButton(); // Проверяем, нужно ли показать крестик
+        toggleClearButton();
 
         if (query.length < 2) {
             resultsDropdown.style.display = 'none';
@@ -298,46 +331,50 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(`/api/search/?q=${encodeURIComponent(query)}`)
             .then(response => response.json())
             .then(data => {
-                resultsDropdown.innerHTML = '';
-
-                if (data.games.length > 0) {
-                    data.games.forEach(game => {
-                        const gameUrl = `/game/${game.id}/`; 
-
-                        const item = document.createElement('a');
-                        item.href = gameUrl;
-                        item.className = 'search-result-item';
-                        item.innerHTML = `
-                            <img src="${game.cover_url}" alt="${game.title}">
-                            <div class="search-result-info">
-                                <h4>${game.title}</h4>
-                                <span class="search-price">${game.price}</span>
+                if (data.games && data.games.length > 0) {
+                    // Генерация всей списка карточек за один раз
+                    resultsDropdown.innerHTML = data.games.map(game => `
+                        <a href="/game/${game.id}/" class="search-result-item">
+                            <!-- Обложка -->
+                            <div class="search-cover-wrapper">
+                                <img src="${game.cover_url}" class="search-result-cover" alt="${game.title}">
                             </div>
-                        `;
-                        resultsDropdown.appendChild(item);
-                    });
+
+                            <div class="search-result-info">
+                                <span class="search-title">${game.title}</span>
+                            </div>
+
+                            <div class="search-result-right">
+                                <div class="search-badges">
+                                    ${game.discount ? `<span class="discount">-${game.discount}%</span>` : ''}
+                                </div>
+                                <div class="search-price-block">
+                                    ${game.old_price ? `<span class="old-price">${game.old_price}₴</span>` : ''}
+                                    <span class="search-price">${game.price}₴</span>
+                                </div>
+                            </div>
+                        </a>
+                    `).join('');
+
                     resultsDropdown.style.display = 'block';
                 } else {
+                    resultsDropdown.innerHTML = '';
                     resultsDropdown.style.display = 'none';
                 }
             })
             .catch(error => console.error('Ошибка поиска:', error));
     });
 
-    // Логика клика по крестику
-    // Найдите этот блок (примерно 215 строка):
+    // Очистка поля по клику на крестик
     clearBtn.addEventListener('click', () => {
         searchInput.value = '';
         resultsDropdown.innerHTML = '';
-
-        // ОШИБКА БЫЛА ЗДЕСЬ: resultsDropdown.style.style.display = 'none';
-        resultsDropdown.style.display = 'none'; // Исправлено (один .style)
-
+        resultsDropdown.style.display = 'none';
         clearBtn.style.display = 'none';
         searchInput.focus();
     });
 
-    // Скрываем плашку при клике вне области поиска
+    // Скрытие выпадающего списка при клике вне его области
     document.addEventListener('click', function(e) {
         if (!searchInput.contains(e.target) && !resultsDropdown.contains(e.target) && !clearBtn.contains(e.target)) {
             resultsDropdown.style.display = 'none';

@@ -1,0 +1,17 @@
+# Виртуальное окружение
+venv/
+.venv/
+ENV/
+
+# Кэш Python
+**/__pycache__/
+*.pyc
+*.pyo
+
+# База данных
+*.sqlite3
+
+# Временные скрипты и настройки IDE
+djang/fix_db.py
+.vscode/
+.idea/

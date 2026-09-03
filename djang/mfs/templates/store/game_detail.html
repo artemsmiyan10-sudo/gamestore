@@ -16,7 +16,7 @@
             <div class="logo">GAME<span>STORE</span></div>
             <a href="{% url 'mfs:index' %}" class="nav-link active">МАГАЗИН</a>
             <a href="{% url 'mfs:library' %}" class="nav-link">БИБЛИОТЕКА</a>
-            <a href="#" class="nav-link">НОВОСТИ</a>
+            <a href="{% url 'mfs:news' %}" class="nav-link">НОВОСТИ</a>
         </div>
 
         <div class="nav-right">
@@ -156,23 +156,26 @@
                     {% endif %}
                 </div>
 
-                <button data-url="{% url 'mfs:add_to_cart' game.id %}" class="buy-button js-add-to-cart">
-                    В корзину
-                </button>
+                {% if game %}
+                    <button data-url="{% url 'mfs:add_to_cart' game.id %}" class="buy-button js-add-to-cart">
+                        В корзину
+                    </button>
+                {% endif %}
             </div>
         </div>
     </section>
 
     <!-- ОПИСАНИЕ -->
     <section class="detail-section">
-        <h2>Об этой игре</h2>
-        <div class="description-box">
-            {% if game.long_description %}
-                {{ game.long_description|linebreaks }}
-            {% else %}
-                <p>{{ game.description|linebreaks }}</p>
-            {% endif %}
-        </div>
+        {% for item in news_list %}
+        <article class="news-card">
+            <span class="news-date">{{ item.created_at|date:"d E Y" }}</span>
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.content }}</p>
+        </article>
+    {% empty %}
+        <p>Новостей пока нет.</p>
+    {% endfor %}
     </section>
 
     <!-- ОТЗЫВЫ -->

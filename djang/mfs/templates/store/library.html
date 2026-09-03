@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Библиотека | GameStore</title>
-    <link rel="stylesheet" href="{% static 'library.css' %}?v=7">
+    <link rel="stylesheet" href="{% static 'library.css' %}?v=8">
     <link rel="icon" type="image/png" href="https://cdn.pixabay.com/photo/2012/04/15/18/57/dvd-34919_640.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -16,7 +16,7 @@
             <div class="logo">GAME<span>STORE</span></div>
             <a href="{% url 'mfs:index' %}" class="nav-link">МАГАЗИН</a>
             <a href="{% url 'mfs:library' %}" class="nav-link active">БИБЛИОТЕКА</a>
-            <a href="#" class="nav-link">НОВОСТИ</a>
+            <a href="{% url 'mfs:news' %}" class="nav-link">НОВОСТИ</a>
         </div>
 
         <div class="nav-right">

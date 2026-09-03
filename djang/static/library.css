@@ -92,7 +92,7 @@ body {
     bottom: -8px;
     height: 2px;
     background-color: #6366f1;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
 }
 
 .nav-right {
@@ -137,7 +137,7 @@ body {
     border:
         2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     overflow: hidden; /* Аккуратно срезает углы у инпута и кнопки */
     transition: 0.2s;
 }
@@ -186,7 +186,7 @@ body {
     grid-template-columns: 1.7fr 1fr;
     min-height: 330px;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     background: linear-gradient(90deg, #2e313f, #21232d);
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
     margin-bottom: 50px;
@@ -305,7 +305,7 @@ body {
 a.game-card {
     overflow: hidden;
     background: #21232d;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     border:
         2px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
@@ -433,7 +433,7 @@ a.game-card:hover {
     color: #172000;
     padding: 7px 6px;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.5px;
@@ -483,7 +483,7 @@ a.game-card:hover {
     width: 100%;
     height: auto; /* Высота подстраивается под пропорции картинки */
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
 }
 
 .game-detail-cover .no-cover {
@@ -497,7 +497,7 @@ a.game-card:hover {
 .game-detail-info {
     padding: 25px;
     background: #21232d;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     border:
         2px solid rgba(255, 255, 255, 0.2);
 }
@@ -533,7 +533,7 @@ a.game-card:hover {
     background: #6366f1;
     color: white;
     padding: 11px 27px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
@@ -578,7 +578,7 @@ a.game-card:hover {
 .description-box {
     padding: 25px;
     background: #21232d;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     border:
         2px solid rgba(255, 255, 255, 0.2);
     color: #becddb;
@@ -704,7 +704,7 @@ a.game-card:hover {
     color: #ffffff;
     border: 2px solid #ff3b30;
     padding: 11px 27px;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     font-size: 16px;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
     transition: top 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s;
@@ -724,14 +724,14 @@ a.game-card:hover {
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 ::-webkit-scrollbar-track {
     background: #111216;
 }
 ::-webkit-scrollbar-thumb {
     background: #2e313f;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #6366f1;
@@ -778,7 +778,7 @@ a.game-card:hover {
     background: #21232d;
     border:
         2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     padding: 35px;
     width: 100%;
     max-width: 400px;
@@ -808,7 +808,7 @@ a.game-card:hover {
 .form-group input {
     background: #17181f;
     border: 2px solid #3e3e70;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     padding: 9px 14px;
     color: white;
     font-size: 14px;
@@ -831,7 +831,7 @@ a.game-card:hover {
     border: 2px solid #ff3b30;
     color: #ff3b30;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-size: 14px;
     margin-bottom: 25px;
     text-align: center;
@@ -1277,9 +1277,11 @@ body {
     position: relative;
     width: 100%;
     margin: 0 auto; /* Центрирует блок по горизонтали */
-    height: 425px;
+    height: 250px;
     background-color: #000;
     overflow: hidden;
+    max-width: 1700px;    /* Ограничивает максимальную ширину карточки */
+    height: 400px;
 }
 
 /* 2. Картинка (Центрируется по оси Х и У внутри контейнера) */
@@ -1290,7 +1292,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 27.5%; /* Идеальное центрирование картинки */
+    object-position: center 30%; /* Идеальное центрирование картинки */
     z-index: 1;
 }
 
@@ -1302,7 +1304,6 @@ body {
     width: 100%;
     height: 100%;
     /* Тень создаёт размытие краев, а linear-gradient притемняет низ под заголовок */
-    box-shadow: inset 0 0 25px 5px #000;
     z-index: 2;
     pointer-events: none; /* Пропускает клики */
 }
@@ -1327,7 +1328,7 @@ body {
     font-size: 32px;
     font-weight: 700;
     color: #ffffff;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+    text-shadow: 0 5px 5px rgba(0, 0, 0, 0.9);
     letter-spacing: 0.5px;
     white-space: nowrap;
     overflow: hidden;
@@ -1632,4 +1633,35 @@ body {
 .profile {
     color: #aeb8c2;
     font-size: 16px;
+}
+
+:root {
+    /* Colors */
+    --bg-primary: #111216;
+    --bg-secondary: #17181f;
+    --bg-card: #252833;
+    --bg-card-hover: #2c2e3b;
+
+    --text-primary: #ffffff;
+    --text-secondary: #becddb;
+    --text-muted: #71808d;
+
+    --accent: #6366f1;
+    --success: #22c55e;
+    --danger: #ff3b30;
+
+    /* Borders */
+    --border: rgba(255, 255, 255, 0.2);
+    --border-subtle: rgba(255, 255, 255, 0.06);
+
+    /* Shadows */
+    --shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+
+    /* Radius */
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --radius-big: 50px;
+
+    /* Animation */
+    --transition: 0.2s ease;
 }

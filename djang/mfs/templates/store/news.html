@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Новости | GameStore</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+<header class="navbar">
+    <div class="nav-left">
+        <div class="logo">
+            GAME<span>STORE</span>
+        </div>
+        <a href="{% url 'mfs:index' %}"
+           class="nav-link">
+            МАГАЗИН
+        </a>
+        <a href="{% url 'mfs:library' %}"
+           class="nav-link">
+            БИБЛИОТЕКА
+        </a>
+        <a href="{% url 'mfs:news' %}"
+           class="nav-link active">
+            НОВОСТИ
+        </a>
+    </div>
+
+    <div class="nav-right">
+        <a href="{% url 'mfs:cart_detail' %}"
+           class="nav-link">
+            КОРЗИНА
+            <span class="cart-badge"
+                  {% if not request.session.cart %}
+                  style="display: none;"
+                  {% endif %}>
+                {{ request.session.cart|length }}
+            </span>
+        </a>
+
+        <button class="install-btn">
+            ↓ Установить
+        </button>
+
+        {% if user.is_authenticated %}
+            <div class="user-dropdown">
+                <a href="#"
+                   class="nav-link user-name"
+                   id="userMenuBtn">
+                    {{ user.username }} ▾
+                </a>
+                <div class="user-dropdown-menu"
+                     id="userDropdownMenu">
+                    <a href="{% url 'mfs:logout' %}"
+                       class="logout-item">
+                        Выйти
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <a href="{% url 'mfs:login' %}"
+               class="nav-link">
+                ВХОД
+            </a>
+        {% endif %}
+    </div>
+</header>
+
+<main class="container news-container">
+    <h1 class="news-title">
+        Новости
+    </h1>
+
+    <div class="news-list">
+        {% for news in news_list %}
+            <article class="news-card">
+                <h2>
+                    {{ news.title }}
+                </h2>
+                <div class="news-description">
+                    {{ news.description|linebreaks }}
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty-news">
+                Новостей пока нет.
+            </div>
+        {% endfor %}
+    </div>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const userMenuBtn =
+        document.getElementById("userMenuBtn");
+
+    const userDropdownMenu =
+        document.getElementById("userDropdownMenu");
+
+    if (userMenuBtn && userDropdownMenu) {
+        userMenuBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            userDropdownMenu.classList.toggle("show");
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!userMenuBtn.contains(e.target)) {
+                userDropdownMenu.classList.remove("show");
+            }
+        });
+    }
+});
+
+</script>
+</body>
+</html>

@@ -137,3 +137,26 @@ class Message(models.Model):
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_messages')
     text = models.TextField(max_length=150)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class News(models.Model):
+    title = models.CharField(
+        max_length=200,
+        verbose_name="Заголовок"
+    )
+
+    description = models.TextField(
+        verbose_name="Описание"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата публикации"
+    )
+
+    class Meta:
+        verbose_name = "Новость"
+        verbose_name_plural = "Новости"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.title

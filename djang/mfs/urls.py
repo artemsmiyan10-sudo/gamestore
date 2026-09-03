@@ -15,6 +15,7 @@ urlpatterns = [
     path('api/search/', views.game_search_ajax, name='game_search_ajax'),
     path('library/', views.library, name='library'),
     path('checkout/', views.checkout, name='checkout'),
-    path('library/remove/<int:game_id>/', views.remove_from_library, name='remove_from_library')
+    path('library/remove/<int:game_id>/', views.remove_from_library, name='remove_from_library'),
+    path("news/", views.news, name="news"),
 ]
 

@@ -21,11 +21,11 @@ body {
     background: radial-gradient(
         circle at 50% 0%,
         #282a36 0%,
-        #17181f 35%,
-        #111216 70%
+        var(--bg-secondary) 35%,
+        var(--bg-primary) 70%
     );
     background-attachment: fixed;
-    color: #d6d7d8;
+    color: var(--text-primary);
     font-family: Inter, Helvetica, sans-serif;
 }
 
@@ -42,7 +42,7 @@ body {
     padding: 0 7%;
     background: rgba(11, 18, 26, 0.96);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
     backdrop-filter: blur(5px);
     position: sticky;
     top: 0;
@@ -65,13 +65,13 @@ body {
 }
 
 .logo span {
-    color: #6366f1;
+    color: var(--accent);
 }
 
 .nav-link {
     font-family: "MyFont", Inter, sans-serif;
     position: relative;
-    color: #b8bad1;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 16px;
     font-weight: 700;
@@ -80,7 +80,7 @@ body {
 
 .nav-link:hover,
 .nav-link.active {
-    color: #6366f1;
+    color: var(--accent);
 }
 
 .nav-link.active::after {
@@ -90,8 +90,8 @@ body {
     right: 0;
     bottom: -8px;
     height: 2px;
-    background-color: #6366f1;
-    border-radius: 5px;
+    background-color: var(--accent);
+    border-radius: var(--radius-sm);
 }
 
 .nav-right {
@@ -101,7 +101,7 @@ body {
 }
 
 .profile {
-    color: #aeb8c2;
+    color: var(--text-secondary);
     font-size: 16px;
 }
 
@@ -133,17 +133,17 @@ body {
     display: flex;
     width: 500px;
     height: 38px;
-    background: #17181f;
-    border: 2px solid #3e3e70;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-accent);
+    box-shadow: 0 15px 25px var(--shadow);
+    border-radius: var(--radius-sm);
     overflow: hidden; /* Аккуратно срезает углы у инпута и кнопки */
     transition: 0.2s;
 }
 
 /* Красивая подсветка ВСЕГО блока при клике на поиск */
 .search-box:focus-within {
-    border-color: #6366f1;
+    border-color: var(--accent);
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.25);
 }
 
@@ -151,20 +151,21 @@ body {
     flex: 1;
     border: none;
     outline: none;
-    padding: 0 14px;
+    padding: 0 15px;
     color: white;
     background: transparent;
     font-size: 14px;
 }
 
 .search-box input::placeholder {
-    color: #718496;
+    color: var(--text-muted);
 }
 
 .search-box button {
     width: 38px;
+    height: 38px;
     border: none;
-    background: #6366f1;
+    background: var(--accent);
     color: white;
     cursor: pointer;
     font-size: 20px;
@@ -182,12 +183,12 @@ body {
 .featured {
     display: grid;
     grid-template-columns: 1.7fr 1fr;
-    min-height: 330px;
+    min-height: 380px;
+    max-height: 380px;
     overflow: hidden;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #2e313f, #21232d);
-    background: #252833;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    box-shadow: 0 15px 25px var(--shadow);
     margin-bottom: 50px;
     transition: 0.2s;
 }
@@ -195,7 +196,7 @@ body {
 .featured > img {
     width: 100%;
     height: 100%;
-    min-height: 330px;
+    min-height: 380px;
     object-fit: cover;
     display: block;
 }
@@ -209,7 +210,7 @@ body {
 
 .featured-label {
     font-family: "MyFont", Inter, sans-serif;
-    color: #6366f1;
+    color: var(--accent);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -225,7 +226,7 @@ body {
 
 .featured-info p {
     margin: 0;
-    color: #becddb;
+    color: var(--text-secondary);
     line-height: 1.75;
     font-size: 16px;
     max-width: 390px;
@@ -251,7 +252,7 @@ body {
 }
 
 .old-featured-price {
-    color: #71808d;
+    color: var(--text-muted);
     font-size: 16px;
     line-height: 1;
     text-decoration: line-through;
@@ -259,14 +260,14 @@ body {
 
 .buy-button {
     border: none;
-    background: #6366f1;
+    background: var(--accent);
     color: white;
     padding: 11px 27px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform var(--transition);
     text-decoration: none;
 }
 
@@ -301,7 +302,7 @@ body {
 }
 
 .section-header a {
-    color: #6366f1;
+    color: var(--accent);
     text-decoration: none;
     font-size: 16px;
     transition: 0.2s;
@@ -327,13 +328,13 @@ a.game-card {
     min-width: 250px;
     min-height: 300px;
     overflow: hidden;
-    background: #252833;
-    border-radius: 10px;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
     transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     border: none; 
     cursor: pointer;
     text-decoration: none;
-    color: #ffffff !important;
+    color: var(--text-primary) ;
     display: flex;
     flex-direction: column;
 }
@@ -343,7 +344,7 @@ a.game-card::after {
     content: '';
     position: absolute;
     inset: 0; /* Растягивает на всю карточку */
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     border: 2px solid transparent; /* Рамка есть всегда, но прозрачная */
     transition: border-color 0.3s, filter 0.3s;
     pointer-events: none; /* Клики проходят сквозь рамку на ссылку */
@@ -352,14 +353,14 @@ a.game-card::after {
 
 a.game-card:hover {
     transform: translateY(-8px);
-    background: #2c2e3b;
+    background: var(--bg-card-hover);
     filter: brightness(1.10);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
 }
 
 /* При ховере меняем цвет рамки у псевдоэлемента */
 a.game-card:hover::after {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--border);
 }
 
 .game-image {
@@ -384,11 +385,11 @@ a.game-card:hover::after {
 .game-card .no-cover {
     width: 100%;
     height: 150px;
-    background: #2b303a;
+    background: var(--bg-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #777;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
@@ -408,7 +409,7 @@ a.game-card:hover::after {
 
 .game-info p {
     margin: 0;
-    color: #becddb;
+    color: var(--text-secondary);
     font-size: 14px;
     line-height: 1.5;
     min-height: 20px;
@@ -417,7 +418,7 @@ a.game-card:hover::after {
 .release-date {
     margin-top: 0px;
     margin-bottom: 25px;
-    color: #8e9aa5;
+    color: var(--text-muted);
     font-size: 14px;
     line-height: 1.75;
 }
@@ -438,27 +439,27 @@ a.game-card:hover::after {
 }
 
 .old-price {
-    color: #71808d;
+    color: var(--text-muted);
     font-size: 12.5px;
     line-height: 1;
     text-decoration: line-through;
 }
 
 .price {
-    color: #d6d7d8;
+    color: var(--text-primary);
     font-size: 16px;
     font-weight: 700;
     line-height: 1;
 }
 
 .price.hot-discount {
-    color: #ff3b30 !important;
+    color: var(--danger) ;
     font-weight: 700;
     text-shadow: 0 0 10px rgba(255, 59, 48, 0.3);
 }
 
 .featured-price.hot-discount {
-    color: #ff3b30 !important;
+    color: var(--danger) ;
     font-size: 22px; /* Увеличьте до нужного размера (базовый 22px) */
     font-weight: 700;
     text-shadow: 0 0 10px rgba(255, 59, 48, 0.3); /* Красивое неоновое свечение */
@@ -469,11 +470,11 @@ a.game-card:hover::after {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #22c55e;
-    color: #172000;
+    background: var(--success);
+    color: var(--bg-primary);
     padding: 7px 6px;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     line-height: 1;
     letter-spacing: 0.5px;
@@ -481,24 +482,17 @@ a.game-card:hover::after {
 
 .not-on-steam-badge2 {
     display: inline-block;
-    background-color: #261246;
-    color: #6366f1;
+    font-family: "MyFont", Inter, sans-serif;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 7px 6px;
     font-size: 14px;
     font-weight: 600;
-    padding: 7px 6px;
-    border-radius: 5px;
-    margin: 0px 0;
-}
-
-.not-on-steam-badge2 {
-  font-family: "MyFont", Inter, sans-serif;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: transparent;
-  color: #e2e8f0;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  backdrop-filter: blur(5px); background: rgba(0, 0, 0, 0.6); color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(5px);
 }
 
 /* =========================
@@ -535,7 +529,7 @@ a.game-card:hover::after {
     width: 100%;
     height: auto; /* Высота подстраивается под пропорции картинки */
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
 }
 
 .game-detail-cover .no-cover {
@@ -543,14 +537,14 @@ a.game-card:hover::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #71808d;
+    color: var(--text-muted);
 }
 
 .game-detail-info {
     padding: 25px;
-    background: #21232d;
-    border-radius: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border);
 }
 
 .game-detail-info h2 {
@@ -561,7 +555,7 @@ a.game-card:hover::after {
 }
 
 .game-short-description {
-    color: #becddb;
+    color: var(--text-secondary);
     line-height: 1.75;
     margin-bottom: 25px;
     font-size: 16px;
@@ -571,12 +565,12 @@ a.game-card:hover::after {
     display: flex;
     gap: 10px;
     padding: 8px 0;
-    color: #becddb;
+    color: var(--text-secondary);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .detail-label {
-    color: #8e9aa5;
+    color: var(--text-muted);
     min-width: 130px;
 }
 
@@ -609,10 +603,10 @@ a.game-card:hover::after {
 
 .description-box {
     padding: 25px;
-    background: #21232d;
-    border-radius: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: #becddb;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border);
+    color: var(--text-secondary);
     line-height: 1.5;
 }
 
@@ -652,7 +646,7 @@ a.game-card:hover::after {
     .search-area {
         flex-direction: column;
         align-items: flex-start;
-        gap: 20px;
+        gap: 10px;
     }
 
     .search-box {
@@ -731,13 +725,13 @@ a.game-card:hover::after {
     top: -75px; /* Изначально спрятана за верхним краем */
     left: 50%;
     transform: translateX(-50%);
-    background: #282a36;
-    color: #ffffff;
-    border: 2px solid #ff3b30;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 2px solid var(--danger);
     padding: 11px 27px;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     font-size: 16px;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
     transition: top 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s;
     opacity: 0;
     z-index: 1000;
@@ -755,17 +749,17 @@ a.game-card:hover::after {
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #111216;
+    background: var(--bg-primary);;
 }
 ::-webkit-scrollbar-thumb {
-    background: #2e313f;
-    border-radius: 5px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #6366f1;
+    background: var(--accent);
 }
 
 
@@ -806,13 +800,13 @@ a.game-card:hover::after {
 }
 
 .auth-box {
-    background: #21232d;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
     padding: 35px;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 25px var(--shadow);
 }
 
 .auth-box h2 {
@@ -832,14 +826,14 @@ a.game-card:hover::after {
 }
 
 .form-group label {
-    color: #becddb;
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
 .form-group input {
-    background: #17181f;
-    border: 2px solid #3e3e70;
-    border-radius: 5px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-accent);
+    border-radius: var(--radius-sm);
     padding: 9px 14px;
     color: white;
     font-size: 14px;
@@ -848,7 +842,7 @@ a.game-card:hover::after {
 }
 
 .form-group input:focus {
-    border-color: #6366f1;
+    border-color: var(--accent);
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.25);
 }
 
@@ -859,41 +853,41 @@ a.game-card:hover::after {
 
 .auth-errors {
     background: rgba(255, 59, 48, 0.15);
-    border: 2px solid #ff3b30;
-    color: #ff3b30;
+    border: 2px solid var(--danger);
+    color: var(--danger);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-size: 14px;
     margin-bottom: 25px;
     text-align: center;
 }
 
 .logout-btn {
-    color: #becddb;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
     padding: 9px 14px;
     border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     transition: 0.2s;
 }
 
 .logout-btn:hover {
     background: rgba(255, 59, 48, 0.2);
-    border-color: #ff3b30;
+    border-color: var(--danger);
 }
 
 .install-btn {
     border: none;
-    background: #6366f1;
+    background: var(--accent);
     color: white;
     padding: 9px 14px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 16px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform var(--transition);
 }
 
 .install-btn:hover {
@@ -905,11 +899,11 @@ a.game-card:hover::after {
 }
 
 .cart-badge {
-    background: #6366f1;
+    background: var(--accent);
     color: white;
     font-size: 14px;
     padding: 2px 10px;
-    border-radius: 15px;
+    border-radius: var(--radius-big);
     margin-left: 5px;
 }
 
@@ -925,10 +919,10 @@ a.game-card:hover::after {
 .main-image-box {
     width: 100%;
     height: 350px;
-    background: #17181f;
-    border-radius: 10px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid var(--border);
 }
 
 .main-image-box img {
@@ -953,7 +947,7 @@ a.game-card:hover::after {
     width: 100px !important;
     height: 55px !important;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     opacity: 0.5;
     border: 2px solid transparent;
@@ -967,7 +961,7 @@ a.game-card:hover::after {
 
 .thumbnails-list img.thumb.active {
     opacity: 1;
-    border-color: #6366f1;
+    border-color: var(--accent);
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.25);
 }
 
@@ -976,13 +970,13 @@ a.game-card:hover::after {
 .thumb {
     width: 100px;
     height: 55px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     object-fit: cover;
     flex-shrink: 0;
     box-sizing: border-box; /* Чтобы рамка не раздувала размер миниатюры */
     border: 2px solid transparent; /* Заранее резервируем место под рамку */
-    transition: all 0.2s ease;
+    transition: all var(--transition);
 }
 
 /* Специфичные стили для контейнера трейлера */
@@ -992,7 +986,7 @@ a.game-card:hover::after {
     align-items: center;
     justify-content: center;
     overflow: hidden;      /* Обрезает картинку по скругленным углам */
-    border-radius: 5px;    /* Скругление углов для контейнера */
+    border-radius: var(--radius-sm);    /* Скругление углов для контейнера */
 }
 
 .video-thumb img {
@@ -1006,7 +1000,7 @@ a.game-card:hover::after {
     opacity: 0.7;
 }
 .thumb.active {
-    border-color: #6366f1;
+    border-color: var(--accent);
     border-width: 2px;
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.25);
 }
@@ -1021,9 +1015,9 @@ a.game-card:hover::after {
     position: absolute;
     width: 25px;
     height: 25px;
-    background: #6366f1;
-    border-radius: 50%;
-    color: #ffffff;
+    background: var(--accent);
+    border-radius: var(--radius-big);
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1043,10 +1037,10 @@ a.game-card:hover::after {
     top: 100%;
     left: 50%;
     right: auto;
-    background-color: #171a21;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border);
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     z-index: 1000;
     min-width: 130px;
     padding: 0px 0;
@@ -1058,7 +1052,7 @@ a.game-card:hover::after {
     visibility: hidden;
     pointer-events: none;
     transform: translateX(-50%) translateY(-6px);
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
 }
 
 /* Показываем меню при наличии класса .show (от клика) */
@@ -1072,17 +1066,17 @@ a.game-card:hover::after {
 .user-dropdown-menu .logout-item {
     display: block;
     padding: 12px 16px;
-    color: #c6d4df !important;
+    color: var(--text-secondary);
     text-decoration: none !important;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-size: 14px;
     font-weight: normal;
     transition: background 0.2s, color 0.2s;
 }
 
 .user-dropdown-menu .logout-item:hover {
-    background-color: #a32a2a;
-    color: #ffffff !important;
+    background-color: var(--danger);
+    color: var(--text-primary) ;
 }
 
 /* Контейнер для правильного позиционирования плашки */
@@ -1090,32 +1084,38 @@ a.game-card:hover::after {
     position: relative;
     width: 100%;
     max-width: 500px; /* Ограничиваем максимальную ширину строки поиска */
+    margin-bottom: -20px; /* Добавляем отступ снизу для визуального разделения */
 }
 
 /* Сама выпадающая плашка */
+/* Строка с одной игрой (ссылка) */
+/* Выпадающий контейнер */
 .search-results {
     position: absolute;
-    top: calc(100% + 5px); /* Появляется строго под инпутом */
+    top: calc(100% + 5px);
     left: 0;
-    width: 100%;
-    background-color: #12161a; /* Глубокий темный цвет */
-    border: 1px solid #262c36;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    z-index: 3; /* Выносит плашку на самый передний план */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    width: 100%; /* Если нужно сделать ширину фиксированной (как в корзине), укажите: min-width: 600px; */
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    z-index: 3;
+    box-shadow: 0 15px 25px var(--shadow);
     overflow: hidden;
+    box-sizing: border-box;
 }
 
-/* Строка с одной игрой (ссылка) */
+/* Карточка товара в поиске (полный аналог .cart-item) */
 .search-result-item {
-    display: flex; /* Выстраивает картинку и текст в один ряд */
+    display: flex;
     align-items: center;
-    padding: 10px 15px;
+    height: 130px; /* Жесткая фиксированная высота */
+    padding: 10px; /* Изменено с 10px 15px на 10px, как в .cart-item */
+    background: var(--bg-card);
     text-decoration: none;
-    color: #e2e8f0;
-    transition: background-color 0.2s ease;
-    border-bottom: 1px solid #1c222b;
+    color: var(--text-secondary);
+    transition: filter 0.3s, background 0.3s;
+    border-bottom: 2px solid var(--border);
+    box-sizing: border-box; /* Гарантирует, что padding входит в 130px высоты */
 }
 
 .search-result-item:last-child {
@@ -1123,41 +1123,52 @@ a.game-card:hover::after {
 }
 
 .search-result-item:hover {
-    background-color: #1c222b; /* Подсветка при наведении */
+    background: var(--bg-card-hover);
+    filter: brightness(1.10);
 }
 
-/* Компактная обложка игры в поиске */
+/* Обложка (аналог .cart-cover img) */
 .search-result-item img {
-    width: 150px;      /* Жесткая небольшая ширина */
-    height: 75px;     /* Жесткая высота */
-    object-fit: cover;/* Картинка аккуратно обрезается, а не растягивается */
-    border-radius: 5px;
-    margin-right: 10px;
-    flex-shrink: 0;   /* Запрещает картинке сжиматься */
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-right: 15px; /* Отступ до текста */
+    flex-shrink: 0;
 }
 
-/* Блок с текстом */
+/* Контентная часть */
 .search-result-info {
     display: flex;
-    flex-direction: column; /* Название сверху, цена снизу */
-    gap: 5px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    overflow: hidden;
 }
 
-.search-result-info h4 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
+.search-result-info h2 {
+    font-weight: 500;
+    color: var(--text-primary);
     /* Если название слишком длинное — оно скроется в три точки */
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
+
+    margin:
+        0 0 8px;
+    font-size: 18px;
 }
 
 .search-result-info .search-price {
-    font-size: 14px;
-    color: #fff; /* Приятный зеленый цвет для цены */
-    font-weight: 500;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.search-price-block .search-price {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 /* Позиционирование крестика внутри search-box */
@@ -1175,13 +1186,287 @@ a.game-card:hover::after {
     position: absolute;
     right: 55px; /* Размещаем перед кнопкой лупы */
     font-size: 28px;
-    color: #718096;
+    color: var(--text-secondary);
     cursor: pointer;
     user-select: none;
-    transition: color 0.2s ease;
-    padding: 0 5px;
+    transition: color var(--transition);
+    padding: 0 0px;
 }
 
 .clear-search-btn:hover {
-    color: #fff; /* Подсветка белым при наведении */
+    color: var(--text-primary); /* Подсветка белым при наведении */
+}
+
+
+
+
+
+
+
+/* Элемент списка */
+.search-result-item {
+    display: flex;
+    align-items: center;
+    height: 130px;
+    padding: 10px 15px;
+    background: var(--bg-card);
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: filter 0.3s, background 0.3s;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+}
+
+.search-result-item:hover {
+    background: var(--bg-card-hover);
+    filter: brightness(1.10);
+}
+
+/* Обложка */
+.search-cover {
+    width: 150px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.search-price-block .old-price {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+    line-height: 1;
+}
+
+/* Инфо (Название и Жанры) */
+.search-result-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    overflow: hidden;
+}
+
+.search-title {
+    font-weight: 700;
+    color: var(--text-primary);
+    /* Если название слишком длинное — оно скроется в три точки */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    margin:
+        0 0 8px;
+    color: white;
+    font-size: 18px;
+}
+
+/* Правая часть (Бейджи и Цена) */
+.search-result-right {
+    margin-left: auto; /* Прижимает весь блок вправо */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Выравнивает бейджи и текст по правому краю */
+    gap: 10px;
+    flex-shrink: 0;
+    padding-left: 15px;
+}
+
+/* Бейджи */
+.search-badges {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge-exclusive {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Блок цен */
+.search-price-block {
+    display: flex;
+    flex-direction: column; /* Ставит старую цену над новой */
+    align-items: flex-end;  /* Выравнивает цены по правому краю */
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+    padding: 0 0px;
+    gap: 10px;
+}
+
+:root {
+    /* Colors */
+    --bg-primary: #111216;
+    --bg-secondary: #17181f;
+    --bg-card: #252833;
+    --bg-card-hover: #2c2e3b;
+
+    --text-primary: #ffffff;
+    --text-secondary: #becddb;
+    --text-muted: #7f8b96;
+
+    --accent: #6366f1;
+    --success: #22c55e;
+    --danger: #e9382f;
+
+    /* Borders */
+    --border: rgba(255, 255, 255, 0.2);
+    --border-accent: #3e3e70;
+    --border-subtle: rgba(255, 255, 255, 0.1);
+
+    /* Shadows */
+    --shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+
+    /* Radius */
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --radius-big: 50px;
+
+    /* Animation */
+    --transition: 0.2s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   NEWS
+========================= */
+
+.news-container {
+    max-width: 1030px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+
+.news-title {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/* Карточка новости */
+.news-card {
+    position: relative; /* 1. Фиксируем ::after внутри карточки */
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    overflow: hidden; /* 2. Чтобы контент и картинки не вылезали за скругления */
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.news-card::after {
+    content: '';
+    position: absolute;
+    inset: -2px; /* 3. Перекрываем внешнюю рамку родителя (смещение на толщину border) */
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.news-card:hover {
+    background: var(--bg-card-hover);
+    box-shadow: 0 15px 25px var(--shadow);
+}
+
+/* Изменяем цвет рамки поверх карточки и картинок */
+.news-card:hover::after {
+    border-color: var(--border-accent, #4a90e2); /* Укажите ваш акцентный цвет ховера */
+}
+
+a.game-card {
+    position: relative; /* Обязательно для позиционирования ::after */
+    min-width: 250px;
+    min-height: 300px;
+    overflow: hidden;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    border: none; 
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-primary) ;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Создаем наложение для рамки */
+a.game-card::after {
+    content: '';
+    position: absolute;
+    inset: 0; /* Растягивает на всю карточку */
+    border-radius: var(--radius-md);
+    border: 2px solid transparent; /* Рамка есть всегда, но прозрачная */
+    transition: border-color 0.3s, filter 0.3s;
+    pointer-events: none; /* Клики проходят сквозь рамку на ссылку */
+    z-index: 2; /* Ставим СВЕРХУ картинки */
+}
+
+a.game-card:hover {
+    transform: translateY(-8px);
+    background: var(--bg-card-hover);
+    filter: brightness(1.10);
+    box-shadow: 0 15px 25px var(--shadow);
+}
+
+/* При ховере меняем цвет рамки у псевдоэлемента */
+a.game-card:hover::after {
+    border-color: var(--border);
+}
+/* Заголовок */
+.news-card h2 {
+    margin: 0 0 20px;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+/* Описание */
+.news-description {
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+.news-description p {
+    margin: 0;
+}
+
+.empty-news {
+    padding: 30px;
+    text-align: center;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    border: 2px solidvar(--border);
+    border-radius: var(--radius-md);
 }
