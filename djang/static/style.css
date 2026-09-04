@@ -1493,6 +1493,13 @@ a.game-card:hover::after {
     line-height: 1.75;
 }
 
+.news-date {
+    color: var(--text-primary);
+    font-size: 16px;
+    margin-top: 10px;
+    line-height: 1.75;
+}
+
 .news-description p {
     margin: 0;
 }
