@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load l10n %}
 {% load static %}
 <html lang="ru">
 <head>
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Магазин | GameStore</title>
 
-    <link rel="stylesheet" href="{% static 'style.css' %}?v=14">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=16">
     <link rel="icon" type="image/png" href="https://cdn.pixabay.com/photo/2012/04/15/18/57/dvd-34919_640.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -104,40 +105,63 @@
 
         <!-- Игра недели -->
         {% if featured_game %}
-        <section class="featured">
-            {% if featured_game.cover %}
-                <img src="{{ featured_game.cover.url }}" alt="{{ featured_game.title }}">
-            {% else %}
-                <div class="no-cover">Нет обложки</div>
-            {% endif %}
-
-            <div class="featured-info">
-                <span class="featured-label">ИГРА НЕДЕЛИ</span>
-                <h2>{{ featured_game.title }}</h2>
-                <p>{{ featured_game.description }}</p>
-
-                {% if featured_game.release_date %}
-                    <span class="release-date">
-                        Дата выхода: {{ featured_game.release_date|date:"d.m.Y" }}
-                    </span>
+        <a href="{% url 'mfs:game_detail' featured_game.id %}" class="featured-link">
+            <section class="featured">
+                {% if featured_game.cover %}
+                    <img src="{{ featured_game.cover.url }}" alt="{{ featured_game.title }}">
+                {% else %}
+                    <div class="no-cover">Нет обложки</div>
                 {% endif %}
 
-                <div class="featured-bottom">
-                    <div class="price-group">
-                        {% if featured_game.discount > 0 %}
-                            <span class="discount">-{{ featured_game.discount }}%</span>
-                            <span class="old-featured-price">{{ featured_game.price|floatformat:0 }}₴</span>
-                            <span class="featured-price">{{ featured_game.discounted_price|floatformat:0 }}₴</span>
-                        {% else %}
-                            <span class="featured-price">{{ featured_game.price|floatformat:0 }}₴</span>
-                        {% endif %}
+                <div class="featured-info">
+                    <div class="gotw-header">
+                        <!-- Таймер слева -->
+                        <span class="featured-label">ИГРА НЕДЕЛИ</span>
+
+                        <div class="timer-container">
+                            <span id="countdown-timer" class="timer-box">
+                                <span id="days">0</span>д 
+                                <span id="hours">00</span>ч 
+                                <span id="minutes">00</span>м 
+                                <span id="seconds">00</span>с
+                            </span>
+                        </div>
+                    
+                        <!-- Бейдж справа -->
                     </div>
-                    <button data-url="{% url 'mfs:add_to_cart' featured_game.id %}" class="buy-button js-add-to-cart">
-                        В корзину
-                    </button>
+                    <h2>{{ featured_game.title }}</h2>
+                    <p>{{ featured_game.description|truncatechars:150 }}</p>
+
+                    {% if featured_game.release_date %}
+                        <span class="featured-release-date">
+                            Дата выхода: {{ featured_game.release_date|date:"d b. Yг."  }}
+                        </span>
+                    {% endif %}
+                    
+
+                    <div class="featured-bottom">
+                        <div class="price-group">
+                            {% if featured_game.discount > 0 %}
+                                <span class="discount">-{{ featured_game.discount }}%</span>
+                                <span class="old-featured-price">{{ featured_game.price|floatformat:0 }}₴</span>
+                                <span class="featured-price">{{ featured_game.discounted_price|floatformat:0 }}₴</span>
+                            {% else %}
+                                <div class="featured-block">
+                                    {% if featured_game.price == 0 %}
+                                        <span class="price">Бесплатно</span>
+                                    {% else %}
+                                        <span class="price">{{ featured_game.price|floatformat:0 }}₴</span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button data-url="{% url 'mfs:add_to_cart' featured_game.id %}" class="buy-button js-add-to-cart">
+                            В корзину
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </a>
         {% endif %}
 
         <!-- Меню жанров -->
@@ -179,7 +203,7 @@
                         
                         {% if game.release_date %}
                             <span class="release-date">
-                                Дата выхода: {{ game.release_date|date:"d.m.Y" }}
+                                Дата выхода: {{ game.release_date|date:"d b. Yг." }}
                             </span>
                         {% endif %}
                         
@@ -193,7 +217,13 @@
                                     </span>
                                 </div>
                             {% else %}
-                                <span class="price">{{ game.price|floatformat:0 }}₴</span>
+                                <div class="price-block">
+                                {% if game.price == 0 %}
+                                    <span class="price">Бесплатно</span>
+                                {% else %}
+                                    <span class="price">{{ game.price|floatformat:0 }}₴</span>
+                                {% endif %}
+                            </div>
                             {% endif %}
                             {% if game.is_not_on_steam %}
                                 <div>
@@ -383,8 +413,73 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+    function getNextMonday() {
+        const now = new Date();
 
+        // День недели:
+        // 0 = воскресенье
+        // 1 = понедельник
+        // ...
+        // 6 = суббота
+        const day = now.getDay();
 
+        let daysUntilMonday;
+
+        if (day === 1) {
+            // Сегодня понедельник.
+            // Следующий понедельник через 7 дней.
+            daysUntilMonday = 7;
+        } else {
+            daysUntilMonday = (8 - day) % 7;
+        }
+
+        const nextMonday = new Date(now);
+
+        nextMonday.setDate(now.getDate() + daysUntilMonday);
+        nextMonday.setHours(0, 0, 0, 0);
+
+        return nextMonday;
+    }
+
+    function updateTimer() {
+        const now = new Date();
+        const target = getNextMonday();
+        let diff = target - now;
+        // Если каким-то образом дошли до момента смены
+        if (diff <= 0) {
+            diff = 0;
+        }
+        const days = Math.floor(
+            diff / (1000 * 60 * 60 * 24)
+        );
+        const hours = Math.floor(
+            (diff % (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+            (diff % (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+        const seconds = Math.floor(
+            (diff % (1000 * 60)) /
+            1000
+        );
+        document.getElementById('days').innerText = days;
+        document.getElementById('hours').innerText =
+            String(hours).padStart(2, '0');
+        document.getElementById('minutes').innerText =
+            String(minutes).padStart(2, '0');
+        document.getElementById('seconds').innerText =
+            String(seconds).padStart(2, '0');
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+</script>
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+</script>
 
 <!-- Плашка уведомления -->
 <div id="installToast" class="toast-notification">

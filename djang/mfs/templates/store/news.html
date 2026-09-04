@@ -85,6 +85,9 @@
                 <div class="news-description">
                     {{ news.description|linebreaks }}
                 </div>
+                <div class="news-date">
+                    {{ news.created_at|date:"d b. Yг." }}
+                </div>
             </article>
         {% empty %}
             <div class="empty-news">

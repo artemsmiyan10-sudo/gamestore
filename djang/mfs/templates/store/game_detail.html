@@ -136,7 +136,7 @@
             {% if game.release_date %}
                 <div class="detail-row">
                     <span class="detail-label">Дата выхода:</span>
-                    <span>{{ game.release_date|date:"d.m.Y" }}</span>
+                    <span>{{ game.release_date|date:"d b. Yг." }}</span>
                 </div>
             {% endif %}
 
@@ -152,7 +152,13 @@
                             </span>
                         </div>
                     {% else %}
-                        <span class="featured-price">{{ game.price|floatformat:0 }}₴</span>
+                        <div class="price-block">
+                            {% if game.price == 0 %}
+                                <span class="price">Бесплатно</span>
+                            {% else %}
+                                <span class="price">{{ game.price|floatformat:0 }}₴</span>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 </div>
 
@@ -167,16 +173,18 @@
 
     <!-- ОПИСАНИЕ -->
     <section class="detail-section">
-        {% for item in news_list %}
-        <article class="news-card">
-            <span class="news-date">{{ item.created_at|date:"d E Y" }}</span>
-            <h2>{{ item.title }}</h2>
-            <p>{{ item.content }}</p>
-        </article>
-    {% empty %}
-        <p>Новостей пока нет.</p>
-    {% endfor %}
-    </section>
+    <div class="game-description">
+        <h2>Об игре</h2>
+        <div class="description-box">
+            {% if game.long_description %}
+                <!-- Фильтр linebreaks красиво сохраняет абзацы и переносы строк -->
+                <p>{{ game.long_description|linebreaks }}</p>
+            {% else %}
+                <p>Описание игры пока не добавлено.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
 
     <!-- ОТЗЫВЫ -->
     <section class="detail-section">
@@ -197,7 +205,7 @@
                         </span>
                     </div>
                     <p>{{ review.text }}</p>
-                    <span class="review-date">{{ review.created_at|date:"d.m.Y H:i" }}</span>
+                    <span class="review-date">{{ review.created_at|date:"d b. Yг." }}</span>
                 </div>
             {% empty %}
                 <div class="description-box">

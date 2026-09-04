@@ -41,23 +41,16 @@ body {
 .navbar {
     width: 100%;
     height: 74px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 0 7%;
-
     background: rgba(11, 18, 26, 0.96);
-
     border-bottom:
         1px solid rgba(255, 255, 255, 0.06);
-
     box-shadow: 0 15px 25px var(--shadow);
-
     position: sticky;
     top: 0;
-
     z-index: 100;
 }
 
@@ -75,7 +68,7 @@ body {
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 1.5px;
-    color: white;
+    color: var(--text-primary);
     margin-right: 25px;
 }
 
@@ -87,7 +80,7 @@ body {
 .nav-link {
     font-family: "MyFont", Inter, sans-serif;
     position: relative;
-    color: #b8bad1;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 16px;
     font-weight: 700;
@@ -107,7 +100,7 @@ body {
     bottom: -8px;
     height: 2px;
     background-color:  var(--accent);
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
 }
 
 
@@ -120,19 +113,16 @@ body {
 
 
 .profile {
-    color: #aeb8c2;
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
 
 .cart-link {
-    color: #b8bad1;
-
+    color: var(--text-secondary);
     text-decoration: none;
-
     font-size: 14px;
     font-weight: 600;
-
     transition: 0.2s;
 }
 
@@ -174,14 +164,14 @@ body {
 
 .cart-title h1 {
     margin: 0;
-    color: white;
+    color: var(--text-primary);
     font-size: 32px;
     font-weight: 600;
 }
 
 
 .cart-count {
-    color: #8e9aa5;
+    color: var(--text-secondary);
     font-size: 24px;
 }
 
@@ -221,7 +211,7 @@ body {
     min-height: 130px;
     max-height: 130px;
     padding: 10px;
-    background: #21232d;
+    background: var(--bg-card);
     
     border: none; 
     border-radius: 10px;
@@ -246,7 +236,7 @@ body {
 }
 
 .cart-item:hover::after {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--border); /* Используем переменную для цвета рамки */
 }
 
 
@@ -259,8 +249,8 @@ body {
     height: 100px;
     flex-shrink: 0;
     overflow: hidden;
-    background: #17181f;
-    border-radius: 5px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
 }
 
 
@@ -282,7 +272,7 @@ body {
     align-items: center;
     justify-content: center;
 
-    color: #71808d;
+    color: var(--text-muted);
 
     font-size: 14px;
 }
@@ -303,31 +293,31 @@ body {
 .cart-game-info h2 {
     margin:
         0 0 8px;
-    color: white;
+    color: var(--text-primary);
     font-size: 18px;
 }
 
 
 .cart-genres {
-    color: #9ba7b3;
+    color: var(--text-secondary);
     font-size: 14px;
     margin-bottom: 5px;
 }
 
 .exclusive {
     display: inline-block;
-    background-color: #261246;
+    background-color: var(--bg-secondary);
     color:  var(--accent);
     font-size: 14px;
     font-weight: 600;
     padding: 7px 6px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     margin: 0px 0;
 }
 
 .exclusive {
   font-family: "MyFont", Inter, sans-serif;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border);
   background: transparent;
   display: inline-flex;
   align-items: center;
@@ -361,14 +351,14 @@ body {
 
 
 .cart-actions a {
-    color: #8e9aa5;
+    color: var(--text-secondary);
     font-size: 14px;
     text-decoration: none;
 }
 
 
 .cart-actions a:hover {
-    color: white;
+    color: var(--text-primary);
     text-decoration: underline;
 }
 
@@ -384,7 +374,7 @@ body {
 }
 
 .cart-actions span {
-    color: #4e5560;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
@@ -392,6 +382,12 @@ body {
 /* =========================
    PRICE
 ========================= */
+.price-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+}
 
 .cart-price {
     width: 120px;
@@ -413,7 +409,7 @@ body {
     align-items: center;
     justify-content: center;
     background: var(--success);
-    color: #172000;
+    color: var(--bg-primary);
     padding: 7px 6px;
     font-size: 16px;
     border-radius: var(--radius-sm);
@@ -424,14 +420,14 @@ body {
 
 
 .old-price {
-    color: #71808d;
-    font-size: 12.5px;
+    color: var(--text-muted);
+    font-size: 13px;
     text-decoration: line-through;
 }
 
 
 .current-price {
-    color: white;
+    color: var(--text-primary);
     font-size: 18px;
     font-weight: 700;
 }
@@ -448,9 +444,9 @@ body {
 
 .cart-summary {
     padding: 25px;
-    background: #21232d;
+    background: var(--bg-card);
     border:
-        2px solid rgba(255, 255, 255, 0.2);
+        2px solid var(--border);
     border-radius: var(--radius-md);
     box-shadow: 0 15px 25px var(--shadow);
     position: sticky;
@@ -462,7 +458,7 @@ body {
 .cart-summary h2 {
     margin:
         0 0 22px;
-    color: #8e9aa5;
+    color: var(--text-secondary);
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -473,7 +469,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    color: #aeb8c2;
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
@@ -481,7 +477,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
-    color: #aeb8c2;
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
@@ -496,7 +492,7 @@ body {
     margin:
         20px 0;
     background:
-        rgba(255, 255, 255, 0.1);
+        var(--border);
 }
 
 
@@ -504,7 +500,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: white;
+    color: var(--text-primary);
     font-size: 18px;
 }
 
@@ -526,7 +522,7 @@ body {
     border: none;
     border-radius: var(--radius-sm);
     background-color:  var(--accent);
-    color: white;
+    color: var(--text-primary);
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
@@ -546,7 +542,7 @@ body {
     margin:
         15px 0 0;
 
-    color: #71808d;
+    color: var(--text-muted);
     font-size: 14px;
     line-height: 1.5;
     text-align: center;
@@ -564,9 +560,9 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: #21232d;
+    background: var(--bg-card);
     border:
-        2px solid rgba(255, 255, 255, 0.2);
+        2px solid var(--border);
     box-shadow: 0 15px 25px var(--shadow);
     border-radius: var(--radius-md);
 }
@@ -582,7 +578,7 @@ body {
 .empty-cart h2 {
     margin: 0 0 10px;
 
-    color: white;
+    color: var(--text-primary);
 
     font-size: 24px;
 }
@@ -591,7 +587,7 @@ body {
 .empty-cart p {
     margin: 0 0 25px;
 
-    color: #8e9aa5;
+    color: var(--text-muted);
 
     font-size: 14px;
 }
@@ -604,7 +600,7 @@ body {
 .buy-button {
     border: none;
     background:  var(--accent);
-    color: white;
+    color: var(--text-primary);
     padding: 11px 27px;
     border-radius: var(--radius-sm);
     font-size: 16px;
@@ -713,7 +709,7 @@ body {
 .install-btn {
     border: none;
     background:  var(--accent);
-    color: white;
+    color: var(--text-primary);
     padding: 9px 14px;
     border-radius: var(--radius-sm);
     font-weight: 600;
@@ -732,7 +728,7 @@ body {
 
 .cart-badge {
     background:  var(--accent);
-    color: white;
+    color: var(--text-primary);
     font-size: 14px;
     padding: 2px 10px;
     border-radius: var(--radius-big);
@@ -753,8 +749,8 @@ body {
     top: 100%;
     left: 50%;
     right: auto;
-    background-color: #171a21;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background-color: var(--bg-card);
+    border: 2px solid var(--border);
     box-shadow: 0px 8px 16px var(--shadow2);
     border-radius: var(--radius-sm);
     z-index: 1000;
@@ -782,7 +778,7 @@ body {
 .user-dropdown-menu .logout-item {
     display: block;
     padding: 12px 16px;
-    color: #c6d4df ;
+    color: var(--text-secondary);
     text-decoration: none !important;
     font-size: 14px;
     font-weight: normal;
@@ -791,8 +787,8 @@ body {
 }
 
 .user-dropdown-menu .logout-item:hover {
-    background-color: var(--danger);;
-    color: #ffffff !important;
+    background-color: var(--danger);
+    color: var(--text-primary) !important;
 }
 
 .arrow-down {
@@ -808,7 +804,7 @@ body {
     justify-content: space-between;
     padding: 0 7%;
     background: rgba(11, 18, 26, 0.96);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--border);
     box-shadow: 0 15px 25px var(--shadow);
     backdrop-filter: blur(5px);
     position: sticky;
@@ -836,7 +832,7 @@ body {
 
 .nav-link {
     position: relative;
-    color: #b8bad1;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 16px;
     font-weight: 700;
@@ -866,7 +862,7 @@ body {
 }
 
 .profile {
-    color: #aeb8c2;
+    color: var(--text-secondary);
     font-size: 16px;
 }
 
@@ -878,7 +874,7 @@ body {
 .section-title {
     font-size: 24px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text-primary);
     margin-bottom: 25px;
 }
 
@@ -892,7 +888,7 @@ body {
 .recommendations-section .section-title {
     font-size: 24px;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
     margin-bottom: 20px;
 }
 
@@ -905,7 +901,7 @@ body {
 
 /* Карточка игры */
 .rec-card {
-    background: #252833;
+    background: var(--bg-card);
     border: none; 
     border-radius: var(--radius-md);
     max-height: 300px;
@@ -933,7 +929,7 @@ body {
 }
 
 .rec-card:hover::after {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--border);
 }
 
 /* Ограничиваем высоту изображения, чтобы картинки не растягивались */
@@ -949,13 +945,13 @@ a.game-card {
     min-width: 250px;
     min-height: 300px;
     overflow: hidden;
-    background: #21232d;
+    background: var(--bg-card);
     border-radius: var(--radius-md);
     transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
     border: none; 
     cursor: pointer;
     text-decoration: none;
-    color: #ffffff ;
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
 }
@@ -990,7 +986,7 @@ a.game-card:hover {
     margin-top: 10px;
     font-size: 16px;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
     margin-bottom: 10px;
     white-space: nowrap;
     overflow: hidden;
@@ -999,7 +995,7 @@ a.game-card:hover {
 
 .rec-card-genre {
     font-size: 14px;
-    color: #94a3b8;
+    color: var(--text-secondary);
     margin-bottom: 30px;
 }
 
@@ -1007,19 +1003,20 @@ a.game-card:hover {
 .rec-card-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 10px;
     margin-top: auto;
+    min-height: 30px;
 }
 
 .rec-price {
     font-size: 16px;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .btn-add-rec {
     background: var(--accent);
-    color: #fff;
+    color: var(--text-primary);
     padding: 6px 12px;
     border-radius: var(--radius-sm);
     font-size: 14px;
@@ -1031,7 +1028,7 @@ a.game-card:hover {
 .btn-add-rec {
     border: none;
     background: var(--accent);
-    color: white;
+    color: var(--text-primary);
     padding: 7px 14px;
     border-radius: var(--radius-sm);
     font-size: 14px;
@@ -1052,10 +1049,10 @@ a.game-card:hover {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #111216;
+    background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-    background: #2e313f;
+    background: var(--bg-secondary);
     border-radius: var(--radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -1070,7 +1067,7 @@ a.game-card:hover {
     --bg-card-hover: #2c2e3b;
 
     --text-primary: #ffffff;
-    --text-secondary: #becddb;
+    --text-secondary: #b4c1ce;
     --text-muted: #7f8b96;
 
     --accent: #6366f1;

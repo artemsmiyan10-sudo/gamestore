@@ -190,7 +190,29 @@ body {
     background: var(--bg-card);
     box-shadow: 0 15px 25px var(--shadow);
     margin-bottom: 50px;
+    border: none; 
     transition: 0.2s;
+}
+
+.featured::after {
+    content: '';
+    position: absolute;
+    inset: 0; /* Растягивает на всю карточку */
+    border-radius: var(--radius-md);
+    border: 2px solid transparent; /* Рамка есть всегда, но прозрачная */
+    transition: border-color 0.3s, filter 0.3s;
+    pointer-events: none; /* Клики проходят сквозь рамку на ссылку */
+    z-index: 2; /* Ставим СВЕРХУ картинки */
+}
+
+.featured:hover {
+    background: var(--bg-card-hover);
+    filter: brightness(1.10);
+}
+
+/* При ховере меняем цвет рамки у псевдоэлемента */
+.featured:hover::after {
+    border-color: var(--border);
 }
 
 .featured > img {
@@ -214,7 +236,8 @@ body {
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 1.5px;
-    margin-bottom: 15px;
+    margin-bottom: 0;
+    flex-wrap: nowrap;
 }
 
 .featured-info h2 {
@@ -230,6 +253,10 @@ body {
     line-height: 1.75;
     font-size: 16px;
     max-width: 390px;
+}
+
+.featured-link {
+    text-decoration: none;
 }
 
 .price-group {
@@ -426,7 +453,7 @@ a.game-card:hover::after {
 .game-bottom {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin-top: auto;
     min-height: 30px;
 }
@@ -440,7 +467,7 @@ a.game-card:hover::after {
 
 .old-price {
     color: var(--text-muted);
-    font-size: 12.5px;
+    font-size: 13px;
     line-height: 1;
     text-decoration: line-through;
 }
@@ -463,6 +490,14 @@ a.game-card:hover::after {
     font-size: 22px; /* Увеличьте до нужного размера (базовый 22px) */
     font-weight: 700;
     text-shadow: 0 0 10px rgba(255, 59, 48, 0.3); /* Красивое неоновое свечение */
+}
+
+.featured-release-date {
+    margin-top: 0px;
+    margin-bottom: 15px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.75;
 }
 
 .discount {
@@ -1021,7 +1056,7 @@ a.game-card:hover::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12.5px;
+    font-size: 13px;
     padding-left: 2px;
     pointer-events: none;  /* Пропускает клик на родительский div */
 }
@@ -1233,7 +1268,7 @@ a.game-card:hover::after {
 }
 
 .search-price-block .old-price {
-    font-size: 12.5px;
+    font-size: 13px;
     color: var(--text-muted);
     text-decoration: line-through;
     line-height: 1;
@@ -1312,7 +1347,7 @@ a.game-card:hover::after {
     --bg-card-hover: #2c2e3b;
 
     --text-primary: #ffffff;
-    --text-secondary: #becddb;
+    --text-secondary: #b4c1ce;
     --text-muted: #7f8b96;
 
     --accent: #6366f1;
@@ -1469,4 +1504,55 @@ a.game-card:hover::after {
     background: var(--bg-secondary);
     border: 2px solidvar(--border);
     border-radius: var(--radius-md);
+}
+
+/* Контейнер-шапка для выстраивания в один ряд */
+/* Шапка: всё строго в одну строку, прижато влево */
+
+.timer-label {
+    font-size: 14px;
+    color: #8f98a0;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.timer-box {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: monospace;
+    white-space: nowrap;
+    /* Если визуально текст кажется чуть выше/ниже из-за моноширинного шрифта, 
+       можно добавить line-height: 1 */
+    line-height: 1;
+
+    display: inline-block;
+    font-family: "MyFont", Inter, sans-serif;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 7px 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(5px);
+    margin-left: 30px;
+}
+
+.gotw-header {
+    display: grid;
+    /* max-content гарантирует, что первая и последняя колонки подстроятся под ширину текста */
+    grid-template-columns: max-content 1fr max-content;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.timer-container {
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
 }

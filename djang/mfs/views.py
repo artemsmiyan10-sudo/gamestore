@@ -8,7 +8,38 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.views.decorators.http import require_POST
-import os
+import random
+from datetime import timedelta
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Game
+
+def index(request):
+    games = list(Game.objects.all())
+    game_of_the_week = None
+    next_rotation_iso = ""
+
+    if games:
+        now = timezone.localtime(timezone.now())
+        year, week, _ = now.isocalendar()
+
+        # Случайный выбор игры на неделю
+        rnd = random.Random(f"{year}-{week}")
+        game_of_the_week = rnd.choice(games)
+
+        # Вычисляем следующий понедельник (00:00:00)
+        days_until_monday = 7 - now.weekday()
+        next_monday = (now + timedelta(days=days_until_monday)).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        
+        # Передаем строкой вида "2026-09-07T00:00:00"
+        next_rotation_iso = next_monday.strftime("%Y-%m-%dT%H:%M:%S")
+
+    return render(request, 'store/index.html', {
+        'game_of_the_week': game_of_the_week,
+        'next_rotation_iso': next_rotation_iso,
+    })
 
 def home(request):
     # 1. Игра недели

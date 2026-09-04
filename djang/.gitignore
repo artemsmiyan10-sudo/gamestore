@@ -15,3 +15,7 @@ ENV/
 djang/fix_db.py
 .vscode/
 .idea/
+
+# Игнорировать пользовательские медиафайлы
+media/
+**/media/
